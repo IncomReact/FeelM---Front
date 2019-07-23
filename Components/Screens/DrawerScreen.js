@@ -50,7 +50,7 @@ export default class LoginScreen extends React.Component {
                             }
                             titleStyle={styles.TitleButton}
                             buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                            onPress={() => this.props.navigation.navigate('With')}
+                            onPress={() => this.props.navigation.navigate('Mood')}
                         />
                     <Button containerStyle={styles.ButtonMood}
                         title="FeceFeelM"
@@ -64,7 +64,7 @@ export default class LoginScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.props.navigation.navigate('FaceFeelM')}
                     />
                     </View>
                 <View style={styles.Mood}>
@@ -84,7 +84,7 @@ export default class LoginScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.props.navigation.navigate('Wishlist')}
                     />
                     <Button containerStyle={styles.ButtonMood}
                         title="Rechercher"
@@ -98,7 +98,7 @@ export default class LoginScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.props.navigation.navigate('Search')}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -118,7 +118,7 @@ export default class LoginScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.props.navigation.navigate('TopFilm')}
                     />
                     <Button containerStyle={styles.ButtonMood}
                         title="Box Office"
@@ -132,7 +132,7 @@ export default class LoginScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.props.navigation.navigate('BoxOffice')}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -166,7 +166,7 @@ export default class LoginScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.props.navigation.navigate('Settings')}
                     />
                 </View>
                 <View style={styles.Mood}>

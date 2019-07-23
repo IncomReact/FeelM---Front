@@ -4,34 +4,31 @@ import {
     Text,
     View,
     TouchableOpacity,
-    Image, ImageBackground
+    Image, 
+    ImageBackground
 } from 'react-native';
-import { Button, Header, Tile } from 'react-native-elements';
+import { Button, Header, Tile, Rating } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerActions } from 'react-navigation';
 
 export default class FilmScreen extends Component {
+    
     render() {
+        
+        const { rating } = this.props; // Etoiles
+
         return (
             <View style={styles.container}>
 
                 <Header  // // // // // // //  Header
                     barStyle="light-content"
-                    leftComponent={<Button containerStyle={styles.ButtonMood}
-                        type="clear"
-                        onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }}
-                        icon={
-                            <SvgUri
-                                width="30"
-                                height="30"
-                                color='#fff'
-                                source={require('../../assets/icones/svg/menu.svg')}
-                                style={{ marginLeft: 15, }}
-                            />
-                        }
-                    />}
+                    leftComponent={<Icon style={{ marginLeft: 10 }}
+                        name='chevron-left'
+                        size={25}
+                        color='#fff'
+                        onPress={() => this.props.navigation.goBack()} />}
                     centerComponent={<Image style={{ width: 110, height: 25, }} source={require('../../assets/logo_feelm.png')} />}
                     containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex: 100 }}
                 />
@@ -43,19 +40,84 @@ export default class FilmScreen extends Component {
                     />
 
                 </View >
-                 
+
+                <View style={styles.marge}> 
                <View style={styles.container2}>
                     <Image
                         source={require('../../assets/aff1.jpg')}
-                        style={{ width: 150, height: 210, marginTop: -80, marginLeft:30, alignItems:'flex-start'}}
+                        style={styles.vignette}
                     />
-                   
+                    <View>   
+                        <Text style={styles.h1}>
+                            Intouchable 
+                        </Text>
+                        
+                        <Text style={styles.infosFilm}>
+                            Date de sortie : 02/11/2011 
+                        </Text> 
 
+                        <View style={styles.stars}>
+                        <Rating 
+                        imageSize={25}
+                        readonly
+                        startingValue={rating}
+                        startingValue={4.5}
+                        type='custom'
+                        tintColor='#13172F'
+                        />
+                        </View>
+                    </View>
                </View>
-                
+
+               <View style={styles.content}>
+                        <Text style={styles.h2}>
+                            Synopsis
+                        </Text>
+                        <Text style={styles.contentSynopsis}>
+                        Le film raconte l'histoire vraie d'un homme riche et handicapé qui aime prendre des risques, l'exemple parfait de l'aristocrate français. Il a perdu sa femme lors d'un accident
+                        </Text>
+                </View>
+
+                <View style={styles.marginLeftContainer}>
+                    <Text style={styles.h2}>
+                        0ù regarder le film ?
+                    </Text>
+                </View>
+
+                 <View style={styles.streamLink}>
+                    <Button title="Acheter" style={styles.borderLinkGreen} type="clear" 
+                        icon={<Icon
+                                style={styles.marginIconRight}
+                                name="shopping-cart"
+                                size={20}
+                                color="white"
+                            />}
+                            titleStyle={{color:"#fff",fontWeight:'bold'}}
+                        />
                     
+                    <Button title="Louer" style={styles.borderLinkYellow} type="clear" 
+                    icon={<Icon
+                            style={styles.marginIconRight}
+                            name="history"
+                            size={20}
+                            color="white"
+                        />}
+                        titleStyle={{color:"#fff",fontWeight:'bold'}}
+                    />
+
+                    <Button title="Streaming" style={styles.borderLinkRed} type="clear" 
+                    icon={<Icon
+                            style={styles.marginIconRight}
+                            name="play-circle"
+                            size={20}
+                            color="white"
+                        />}
+                        titleStyle={{color:"#fff",fontWeight:'bold'}}
+                    />
+                    
+                </View>   
                          
-                
+                </View>   
 
                     
             </View>
@@ -72,12 +134,15 @@ export default class FilmScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#13172F'
+        backgroundColor: '#13172F',
     },
-    
+
+    marge: {
+        marginLeft:20,
+        marginRight:20
+    }, 
     container2: {
-        flex:1,
-        alignItems: 'flex-start',
+        flexDirection: 'row',
         width: '100%',
         marginTop: -25,
         borderRadius: 25,
@@ -88,98 +153,65 @@ const styles = StyleSheet.create({
     featured: {
         marginTop: -90,
         zIndex: -10,
-        opacity:0.6,
-        justifyContent: 'center',
-        alignItems: 'center'
+        opacity:0.6,   
     },
-    Mood: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 10,
-        marginRight: 15,
-        marginLeft: 15,
+    vignette:{
+        width: 150, 
+        height: 210, 
+        marginTop: -80, 
+    },
+    h1: {
+
+        marginLeft:20,
+        color: '#fff',
+        fontSize : 26,
+        fontWeight: '800',
+        marginTop: 25,    
+    }, h2: {
+        
+        color: '#fff',
+        fontSize : 26,
+        fontWeight: '800',
+        marginTop: 25,    
     },
 
+    infosFilm: {
+        color: '#bdc3c7',
+        marginTop: 15,
+        marginLeft: 20
+    },
+    stars:{
+        marginTop: 15,
+        alignItems:'flex-start',
+        marginLeft:20
+    },
+    contentSynopsis : {
+        marginTop : 10,
+        fontSize: 20,
+        color: '#bdc3c7',   
+    },
 
-    TitleButton: {
-        fontWeight: 'bold',
-        flexDirection: 'column',
-        marginLeft: 20,
+    streamLink : {
+        flexDirection:'row',
+        marginTop: 20,
+        justifyContent:'space-between'
     },
-    content: {
-        alignItems: 'center',
+    borderLinkGreen: {
+      backgroundColor: '#3DB39E',
+      borderRadius: 15,
+      width:'100%'
     },
-    card: {
-        width: 320,
-        height: 470,
-        backgroundColor: '#FE474C',
-        borderRadius: 5,
-        shadowColor: 'rgba(0,0,0,0.5)',
-        shadowOffset: {
-            width: 0,
-            height: 1
-        },
-        shadowOpacity: 0.5,
-    },
-    card1: {
-        backgroundColor: '#FE474C',
-    },
-    card2: {
-        backgroundColor: '#FEB12C',
-    },
-    label: {
-        lineHeight: 400,
-        textAlign: 'center',
-        fontSize: 55,
-        fontFamily: 'System',
-        color: '#ffffff',
-        backgroundColor: 'transparent',
-    },
-    footer: {
-        alignItems: 'center',
-        zIndex: 100
-    },
-    buttonContainer: {
-        width: 220,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    button: {
-        shadowColor: 'rgba(0,0,0,0.3)',
-        shadowOffset: {
-            width: 0,
-            height: 1
-        },
-        shadowOpacity: 0.5,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 0,
-    },
-    orange: {
-        width: 80,
-        height: 80,
-        borderWidth: 6,
-        backgroundColor: '#13172F',
-        borderColor: '#fff',
-        borderWidth: 2,
-        borderRadius: 55,
-        marginTop: -30
-    },
-    green: {
-        width: 50,
-        height: 50,
-        backgroundColor: '#3DB39E',
-        borderRadius: 75,
-        borderWidth: 6,
-        borderColor: '#3DB39E',
-    },
-    red: {
-        width: 50,
-        height: 50,
+    borderLinkYellow: {
+        backgroundColor: '#f9ca24',
+        borderRadius: 15,
+        width:'100%'
+      },
+    borderLinkRed: {
         backgroundColor: '#DD2E44',
-        borderRadius: 75,
-        borderWidth: 6,
-        borderColor: '#DD2E44',
-    }
+        borderRadius: 15,
+        width:'100%'
+      },
+    marginIconRight:{
+        marginRight:5 
+    },
 });

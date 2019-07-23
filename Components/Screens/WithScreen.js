@@ -37,7 +37,7 @@ export default class WithScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center',}}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.props.navigation.navigate('Type')}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -54,7 +54,7 @@ export default class WithScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.props.navigation.navigate('Type')}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -71,7 +71,7 @@ export default class WithScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.props.navigation.navigate('Type')}
                     />
 
                 </View>
@@ -89,7 +89,7 @@ export default class WithScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, }}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.props.navigation.navigate('Type')}
                     />
 
                 </View>
@@ -107,7 +107,7 @@ export default class WithScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, }}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.props.navigation.navigate('Type')}
                     />
 
                 </View>
@@ -116,6 +116,8 @@ export default class WithScreen extends React.Component {
         );
     }
 }
+
+
 
 const styles = StyleSheet.create({
 

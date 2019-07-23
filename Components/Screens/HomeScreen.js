@@ -48,9 +48,10 @@ export default class HomeScreen extends Component{
                             height: '100%',
                         }}
                     />
+                    
                 <CardStack
                     style={styles.content}
-                    renderNoMoreCards={() => <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>No more cards :(</Text>}   
+                    renderNoMoreCards={() => <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :(</Text>}   
                     ref={swiper => {
                         this.swiper = swiper
                     }}
@@ -58,49 +59,63 @@ export default class HomeScreen extends Component{
                     onSwiped={() => console.log('onSwiped')}
                     onSwipedLeft={() => console.log('onSwipedLeft')}
                 >
-                        <Card style={[styles.card, styles.card1]}><Image style={{ width: '100%', height: '100%' }} source={require('../../assets/aff1.jpg')} /></Card>
-                        <Card style={[styles.card, styles.card2]} onSwipedLeft={() => alert('onSwipedLeft')}><Image style={{ width: '100%', height: '100%' }} source={require('../../assets/aff2.jpg')} /></Card>
-                        <Card style={[styles.card, styles.card1]}><Image style={{ width: '100%', height: '100%' }} source={require('../../assets/aff3.jpg')} /></Card>
-                        <Card style={[styles.card, styles.card2]}><Image style={{ width: '100%', height: '100%' }} source={require('../../assets/aff4.jpg')} /></Card>
-                        <Card style={[styles.card, styles.card1]}><Image style={{ width: '100%', height: '100%' }} source={require('../../assets/aff5.jpg')} /></Card>
+                        <Card ><Image style={styles.card} source={require('../../assets/aff1.jpg')} /></Card>
+                        <Card onSwipedLeft={() => alert('onSwipedLeft')}><Image style={styles.card}  source={require('../../assets/aff2.jpg')} /></Card>
+                        <Card ><Image style={styles.card} source={require('../../assets/aff3.jpg')} /></Card>
+                        <Card ><Image style={styles.card} source={require('../../assets/aff4.jpg')} /></Card>
+                        <Card ><Image style={styles.card} source={require('../../assets/aff5.jpg')} /></Card>
 
                 </CardStack>
                     
-                    <Image style={{ width: '100%', height: '100%', marginTop: -210, zIndex: -100, opacity:0.2 }} source={require('../../assets/fil_BG.jpg')} />
+                        <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />
                     
+                <View style={{alignItems:'center'}}>   
                 <View style={styles.footer}>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.button, styles.red]} onPress={() => {
-                            this.swiper.swipeLeft();
-                        }}>
+                       
+                            <TouchableOpacity style={[styles.button, styles.red]} onPress={() => {
+                                this.swiper.swipeLeft();
+                            }}>
                                 <SvgUri source={require('../../assets/close.svg')} width="28"
                                     height="28" />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.orange]} 
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, styles.orange]}
                                 onPress={() => this.props.navigation.navigate('Film')} >
                                 <SvgUri source={require('../../assets/play.svg')} width="40"
-                                    height="40" style={{ marginLeft: 5, }}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.green]} onPress={() => {
-                            this.swiper.swipeRight();
-                        }}>
+                                    height="40" style={{ marginLeft: 5, }} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, styles.green]} onPress={() => {
+                                this.swiper.swipeRight();
+                            }}>
                                 <SvgUri source={require('../../assets/check-mark.svg')} width="28"
                                     height="28" />
-                        </TouchableOpacity>
-                    </View>
+                            </TouchableOpacity>
 
-                </View>
-                    
+
+               </View>
+               <View style={styles.footer2}>
+                        <TouchableOpacity style={[styles.button, styles.blue]} onPress={() => {
+                            this.swiper.goBackFromLeft();
+                        }}>
+                            <SvgUri source={require('../../assets/icones/svg/go-back.svg')} width="28"
+                                height="28" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, styles.yellow]} onPress={() => {
+                            this.swiper.swipeRight();
+                        }}>
+                            <SvgUri source={require('../../assets/icones/svg/fav.svg')} width="28"
+                                height="28" />
+                        </TouchableOpacity>
                 </View> 
+             </View>             
+                </View>
+               
                 </View>
                         
             
         );
     }
 }
-// onPress = {() => {
-//     this.swiper.goBackFromLeft();
-// }}
+
 
 const styles = StyleSheet.create({
     container: {
@@ -125,16 +140,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     card: {
-        width: 320,
+       marginTop:-20,
+        width: 300,
         height: 470,
-        backgroundColor: '#FE474C',
-        borderRadius: 5,
-        shadowColor: 'rgba(0,0,0,0.5)',
+        borderRadius: 10,
+        shadowColor: 'rgba(19,23,47,1)',
         shadowOffset: {
-            width: 0,
-            height: 1
+            width: 5,
+            height: 10
         },
-        shadowOpacity: 0.5,
+        shadowOpacity: 1,
     },
     card1: {
         backgroundColor: '#FE474C',
@@ -142,23 +157,27 @@ const styles = StyleSheet.create({
     card2: {
         backgroundColor: '#FEB12C',
     },
-    label: {
-        lineHeight: 400,
-        textAlign: 'center',
-        fontSize: 55,
-        fontFamily: 'System',
-        color: '#ffffff',
-        backgroundColor: 'transparent',
-    },
+    
     footer: {
+        marginTop: -20,
+        width: 220,
         alignItems: 'center',
-        zIndex:100
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        zIndex: 10000
+    },
+    footer2: {
+        marginTop: 10,
+        alignItems: 'center',
+        flexDirection: 'row',
+        zIndex: 10000
     },
     buttonContainer: {
         width: 220,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    
     button: {
         shadowColor: 'rgba(0,0,0,0.3)',
         shadowOffset: {
@@ -196,5 +215,23 @@ const styles = StyleSheet.create({
         borderRadius: 75,
         borderWidth: 6,
         borderColor: '#DD2E44',
+    },
+    yellow: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#E5C92F',
+        borderRadius: 75,
+        borderWidth: 6,
+        marginLeft:15,
+        borderColor: '#E5C92F',
+    },
+    blue: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#1C213E',
+        borderRadius: 75,
+        borderWidth: 6,
+        marginRight:15,
+        borderColor: '#1C213E',
     }
 });

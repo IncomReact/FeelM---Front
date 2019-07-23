@@ -21,9 +21,9 @@ export default class MoodScreen extends React.Component {
                         color='#fff'
                         onPress={() => this.props.navigation.goBack()} />}
                     centerComponent={{ text: 'TON MOOD ?', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                    
                     containerStyle={{ backgroundColor: '#13172F', justifyContent: 'space-around', borderBottomColor: '#13172F' }}
                 />
-                
                 <View style={styles.Mood}>
                     <Button containerStyle={styles.ButtonMood}
                         title="Heureux"
