@@ -19,25 +19,22 @@ export default class SettingsScreen extends Component {
 
                 <Header  // // // // // // //  Header
                     barStyle="light-content"
-                    leftComponent={<Button 
-                        type="clear"
-                        onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }}
-                        icon={
-                            <SvgUri
-                                width="30"
-                                height="30"
-                                color='#fff'
-                                source={require('../../assets/icones/svg/menu.svg')}
-                                style={{ marginLeft: 15, }}
-                            />
-                        }
-                    />}
+                    leftComponent={<Icon style={{ marginLeft: 10 }}
+                        name='chevron-left'
+                        size={25}
+                        color='#fff'
+                        onPress={() => this.props.navigation.goBack()} />}
                     centerComponent={{ text: 'Réglages', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                    rightComponent={<Icon style={{ marginRight: 10 }}
+                        name='home'
+                        size={22}
+                        color='#fff'
+                        onPress={() => this.props.navigation.navigate('Home')} />}
                     containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex: 100 }}
                 />
                 <View style={styles.featured}>
                     <Tile
-                        imageSrc={require('../../assets/fil_BG.jpg')}
+                        imageSrc={require('../../assets/bg_Loggin.jpg')}
                         featured
                     />
 
@@ -70,7 +67,7 @@ export default class SettingsScreen extends Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', width: '100%'}}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.props.navigation.navigate('Contact')}
                     />
                     <Button containerStyle={styles.ButtonMood}
                         title="Mot de Passe" 
@@ -102,7 +99,7 @@ export default class SettingsScreen extends Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                            onPress={() => this.props.navigation.navigate('Contact')}
                     />
                     <Button containerStyle={styles.ButtonMood}
                         title="Déconnexion"

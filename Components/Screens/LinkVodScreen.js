@@ -1,13 +1,13 @@
 import React from 'react';
 import {
     View,
-    StyleSheet, TouchableOpacity
+    StyleSheet, Image
 } from 'react-native';
 import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SvgUri from 'react-native-svg-uri';
 
-export default class WithScreen extends React.Component {
+
+export default class LinkVodScreen extends React.Component {
 
     render() {
         return (
@@ -20,99 +20,57 @@ export default class WithScreen extends React.Component {
                         size={25}
                         color='#fff'
                         onPress={() => this.props.navigation.goBack()} />}
-                    centerComponent={{ text: 'Avec qui ?', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                    centerComponent={{ text: 'Louer', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                     rightComponent={<Icon style={{ marginRight: 10 }}
-                        name='camera'
+                        name='home'
                         size={22}
                         color='#fff'
-                        onPress={() => this.props.navigation.navigate('FaceFeelM')} />}
+                        onPress={() => this.props.navigation.navigate('Home')} />}
                     containerStyle={{ backgroundColor: '#13172F', justifyContent: 'space-around', borderBottomColor: '#13172F' }}
                 />
                 {/***************************** Boutons ********************************/}
                 <View style={styles.Mood}>
                     <Button containerStyle={styles.ButtonMood}
-                        title="Mes Enfants"
+                        title=""
                         type="clear"
                         icon={
-                            <SvgUri
-                                width="60"
-                                height="60"
-                                source={require('../../assets/icones/svg/066-sweat.svg')}
+                            <Image style={{ width:100, height:100}}
+                                 source={require('../../assets/icones/png/orange-logo.png')}
                             />
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center',}}
-                        onPress={() => this.props.navigation.navigate('Type')}
+                        onPress={() => this.props.navigation.navigate('Webview')}
                     />
                 </View>
                 <View style={styles.Mood}>
                     
                     <Button containerStyle={styles.ButtonMood}
-                        title="En amoureux"
+                        title=""
                         type="clear"
                         icon={
-                            <SvgUri
-                                width="55"
-                                height="55"
-                                source={require('../../assets/icones/svg/120-smile.svg')}
+                            <Image style={{ width:230, height:65}}
+                                 source={require('../../assets/icones/png/itunes-logo.png')}
                             />
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.props.navigation.navigate('Type')}
+                        onPress={() => this.props.navigation.navigate('Webview')}
                     />
                 </View>
                 <View style={styles.Mood}>
                     
                     <Button containerStyle={styles.ButtonMood}
-                        title="Seul"
+                        title=""
                         type="clear"
                         icon={
-                            <SvgUri
-                                width="60"
-                                height="60"
-                                source={require('../../assets/icones/svg/062-grinning.svg')}
+                            <Image style={{ width:250, height:50}}
+                                 source={require('../../assets/icones/png/canal-logo.png')}
                             />
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.props.navigation.navigate('Type')}
-                    />
-
-                </View>
-                <View style={styles.Mood}>
-                    
-                    <Button containerStyle={styles.ButtonMood}
-                        title="Mes amis"
-                        type="clear" 
-                        icon={
-                            <SvgUri
-                                width="60"
-                                height="60"
-                                source={require('../../assets/icones/svg/129-famous.svg')}
-                            />
-                        }
-                        titleStyle={styles.TitleButton}
-                        buttonStyle={{ justifyContent: 'center', flex: 1, }}
-                        onPress={() => this.props.navigation.navigate('Type')}
-                    />
-
-                </View>
-                <View style={styles.Mood}>
-
-                    <Button containerStyle={styles.ButtonMood}
-                        title="En Famille"
-                        type="clear"
-                        icon={
-                            <SvgUri
-                                width="60"
-                                height="60"
-                                source={require('../../assets/icones/svg/156-woman.svg')}
-                            />
-                        }
-                        titleStyle={styles.TitleButton}
-                        buttonStyle={{ justifyContent: 'center', flex: 1, }}
-                        onPress={() => this.props.navigation.navigate('Type')}
+                        onPress={() => this.props.navigation.navigate('Webview')}
                     />
 
                 </View>
@@ -122,13 +80,12 @@ export default class WithScreen extends React.Component {
     }
 }
 
-
-
 const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: '#13172F'
+        backgroundColor: '#13172F',
+        justifyContent:'flex-start'
     },
     Mood: {
         height: '13%',

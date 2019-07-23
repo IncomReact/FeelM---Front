@@ -20,36 +20,31 @@ export default class ContactScreen extends React.Component {
 
     render() {
         return (
-            <KeyboardAvoidingView style={{flex: 1}}>
-           
-            <ImageBackground source={require('../../assets/bg_drawer.jpg')} style={{ width: '100%', height: '100%' }}>
+            <View style={styles.container}> 
             <Header  // // // // // // //  Header
-                    barStyle="light-content"
-                    leftComponent={<Button 
-                        type="clear"
-                        onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }}
-                        icon={
-                            <SvgUri
-                                width="30"
-                                height="30"
-                                color='#fff'
-                                source={require('../../assets/icones/svg/menu.svg')}
-                                style={{ marginLeft: 15, }}
-                            />
-                        }
-                    />}
-                    
-                    containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex: 100 }}
-                />
-
-               
-                <ScrollView style={styles.container}>
+                barStyle="light-content"
+                leftComponent={<Icon style={{ marginLeft: 10 }}
+                    name='chevron-left'
+                    size={25}
+                    color='#fff'
+                    onPress={() => this.props.navigation.goBack()} />}
+                centerComponent={{ text: 'Contactez Nous', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                rightComponent={<Icon style={{ marginRight: 10 }}
+                    name='camera'
+                    size={22}
+                    color='#fff'
+                    onPress={() => this.props.navigation.navigate('FaceFeelM')} />}
+                containerStyle={{ backgroundColor: '#13172F', justifyContent: 'space-around', borderBottomColor: '#13172F' }}
+            />
                 <Text style={styles.titre}>Votre Message</Text>
+
 
                 <TextInput style={styles.input}
                 multiline= {true}
                 numberOfLines= {8}
                 placeholder='Votre message'
+                placeholderTextColor='#fff'
+                
                 title= "Votre message"
                 
 
@@ -57,18 +52,15 @@ export default class ContactScreen extends React.Component {
                    
                     
                    
-                </ScrollView>
-                <View>
+              
                 <Button style={styles.button}
                         title="Envoyer"
                         type= "clear"
                         titleStyle={{color: "#FFF"}}
                          />
-                </View>
+            </View>
                 
-            </ImageBackground>
-            </KeyboardAvoidingView>
-            
+          
         );
     }
 }
@@ -76,20 +68,18 @@ export default class ContactScreen extends React.Component {
 const styles = StyleSheet.create({
 
     container: {
-        width: 320,
-        height: 300,
-        
+        flex:1,
         backgroundColor: '#13172F',
-        marginTop: 100,
-        marginRight: 15,
-        marginLeft: 27,
+    
         
     },
    input:{
+       
+       padding:10,
        height: 200,
-       width: "100%",
-       padding: 15,
-       marginTop: 20,
+       width: "90%",
+       marginLeft:20,
+       marginTop: 80,
        marginBottom: 50,
        color:  "#FFF",
        borderWidth: 1,
@@ -97,9 +87,8 @@ const styles = StyleSheet.create({
 
    },
     titre:{
-        marginTop: 20,
-        fontSize: 28,
-        color: "#FFF",
+        color: '#fff', fontSize: 20, fontWeight: 'bold',
+        marginTop:80,
         textAlign: "center"
 
     },

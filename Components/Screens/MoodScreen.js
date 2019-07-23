@@ -21,7 +21,11 @@ export default class MoodScreen extends React.Component {
                         color='#fff'
                         onPress={() => this.props.navigation.goBack()} />}
                     centerComponent={{ text: 'TON MOOD ?', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
-                    
+                    rightComponent={<Icon style={{ marginRight: 10 }}
+                        name='camera'
+                        size={22}
+                        color='#fff'
+                        onPress={() => this.props.navigation.navigate('FaceFeelM')} />}
                     containerStyle={{ backgroundColor: '#13172F', justifyContent: 'space-around', borderBottomColor: '#13172F' }}
                 />
                 <View style={styles.Mood}>

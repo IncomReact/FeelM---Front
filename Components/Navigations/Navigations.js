@@ -18,22 +18,17 @@ import TopFilmScreen from '../Screens/TopFilmScreen';
 import BoxOfficeScreen from '../Screens/BoxOfficeScreen';
 import SearchMovieScreen from '../Screens/SearchMovieScreen';
 import TypeScreen from '../Screens/TypeScreen';
+import LinkVodScreen from '../Screens/LinkVodScreen';
+import LinkBuyScreen from '../Screens/LinkBuyScreen';
+import LinkStreamScreen from '../Screens/LinkStreamScreen';
+import VodWebviewScreen from '../Screens/LinkVodWebviewScreen';
 const navigator = createDrawerNavigator(
     {
         Home: HomeScreen,
-        Mood: MoodScreen,
-        With: WithScreen,
-        BoxOffice: BoxOfficeScreen,
-        TopFilm: TopFilmScreen,
-        Wishlist: WishlistScreen,
-        FaceFeelM: FaceFeelMScreen,
-        Search: SearchMovieScreen,
-        Contact: ContactScreen,
-        Settings: SettingsScreen,
-        Login: LoginScreen,
+        
     },
     {
-       drawerType: 'back',
+        drawerType: 'back',
         drawerPosition: 'left',
         drawerWidth: 350,
         drawerBackgroundColor: '#090c1c',
@@ -90,11 +85,14 @@ const navigator = createDrawerNavigator(
 //     });
 
 var StackNavigator = createStackNavigator({
-    
+   
     Login: LoginScreen,
     Type: TypeScreen,
     Mood: MoodScreen,
     With: WithScreen,
+    LinkBuy: LinkBuyScreen,
+    LinkVod: LinkVodScreen,
+    LinkStream: LinkStreamScreen,
     BoxOffice: BoxOfficeScreen,
     TopFilm: TopFilmScreen,
     Wishlist: WishlistScreen,
@@ -104,6 +102,8 @@ var StackNavigator = createStackNavigator({
     Login: LoginScreen,
     Film: FilmScreen,
     Search: SearchMovieScreen,
+    Webview: VodWebviewScreen,
+
     navigator : navigator
 }, { headerMode: 'none' })
 

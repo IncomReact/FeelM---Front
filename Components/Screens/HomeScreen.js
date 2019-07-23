@@ -55,11 +55,12 @@ export default class HomeScreen extends Component{
                     ref={swiper => {
                         this.swiper = swiper
                     }}
-
+                        disableBottomSwipe={true}
+                        disableTopSwipe={true}
                     onSwiped={() => console.log('onSwiped')}
                     onSwipedLeft={() => console.log('onSwipedLeft')}
                 >
-                        <Card ><Image style={styles.card} source={require('../../assets/aff1.jpg')} /></Card>
+                        <Card ><Image style={styles.card} source={require('../../assets/aff4.jpg')} /></Card>
                         <Card onSwipedLeft={() => alert('onSwipedLeft')}><Image style={styles.card}  source={require('../../assets/aff2.jpg')} /></Card>
                         <Card ><Image style={styles.card} source={require('../../assets/aff3.jpg')} /></Card>
                         <Card ><Image style={styles.card} source={require('../../assets/aff4.jpg')} /></Card>
