@@ -85,7 +85,7 @@ const navigator = createDrawerNavigator(
 //     });
 
 var StackNavigator = createStackNavigator({
-   
+    Home: HomeScreen,
     Login: LoginScreen,
     Type: TypeScreen,
     Mood: MoodScreen,

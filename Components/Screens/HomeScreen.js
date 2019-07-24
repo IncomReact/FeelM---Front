@@ -14,7 +14,52 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerActions } from 'react-navigation';
 
 export default class HomeScreen extends Component{
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            movies: [],
+            status: null
+        };
+    }
+    componentWillMount() {
+        this.setState({ status: 'Chargement des films en cours ...' });
+    };
+    componentDidMount() {
+        fetch('https://feelmapp.herokuapp.com/listMovies').then(response => {
+            return response.json();
+        }).then(dataFilms => {
+            // var films =JSON.parse(dataFilms);
+            console.log('======== Films =======', dataFilms.movie[1]._id, dataFilms.movie.poster_path);
+            var filmCopy = [];
+            for (let i = 0; i < dataFilms.movie.length; i++) {
+                filmCopy.push({
+
+                    affiche: dataFilms.movie[i].poster_path,
+
+                })
+                this.setState({ movies: filmCopy, });
+            }
+
+            console.log('FilmCopy -----', filmCopy)
+           
+        }).catch(err => {
+            console.log(err);
+        });
+
+    };
     render() {
+        var filmsCard = this.state.movies.map((AffichesFilms, i) => {
+            console.log('====== Boucle films', AffichesFilms)
+            
+            return (
+                <Card key={i}><Image  style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + AffichesFilms.affiche }} /></Card>
+                
+            )
+        })
+       
+
+        // 
         return (
             <View style={styles.container}>
                 
@@ -60,11 +105,7 @@ export default class HomeScreen extends Component{
                     onSwiped={() => console.log('onSwiped')}
                     onSwipedLeft={() => console.log('onSwipedLeft')}
                 >
-                        <Card ><Image style={styles.card} source={require('../../assets/aff4.jpg')} /></Card>
-                        <Card onSwipedLeft={() => alert('onSwipedLeft')}><Image style={styles.card}  source={require('../../assets/aff2.jpg')} /></Card>
-                        <Card ><Image style={styles.card} source={require('../../assets/aff3.jpg')} /></Card>
-                        <Card ><Image style={styles.card} source={require('../../assets/aff4.jpg')} /></Card>
-                        <Card ><Image style={styles.card} source={require('../../assets/aff5.jpg')} /></Card>
+                        {filmsCard.sort(function (a, b) { return 0.5 - Math.random() })}
 
                 </CardStack>
                     
