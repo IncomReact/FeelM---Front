@@ -24,6 +24,7 @@ export default class HomeScreen extends Component{
            
         };
     }
+    
     componentWillMount() {
         this.setState({ status: 'Chargement des films en cours ...' });
         
