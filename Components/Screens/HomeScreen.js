@@ -13,8 +13,9 @@ import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerActions } from 'react-navigation';
 import LottieView from 'lottie-react-native';
+import { connect } from 'react-redux';
 
-export default class HomeScreen extends Component{
+class HomeScreen extends Component{
     constructor(props) {
         super(props);
         
@@ -29,36 +30,14 @@ export default class HomeScreen extends Component{
         this.setState({ status: 'Chargement des films en cours ...' });
         
     };
-    componentDidMount() {
-        fetch('https://feelmapp.herokuapp.com/listMovies').then(response => {
-            return response.json();
-        }).then(dataFilms => {
-            // var films =JSON.parse(dataFilms);
-            console.log('======== Films =======', dataFilms.movie[1]._id, dataFilms.movie.poster_path);
-            var filmCopy = [];
-            for (let i = 0; i < dataFilms.movie.length; i++) {
-                filmCopy.push({
-
-                    affiche: dataFilms.movie[i].poster_path,
-
-                })
-                this.setState({ movies: filmCopy, state: null});
-            }
-
-            console.log('FilmCopy -----', filmCopy)
-           
-        }).catch(err => {
-            console.log(err);
-        });
-
-    };
+    
     render() {
-        const loading  = this.state;
-        var filmsCard = this.state.movies.map((AffichesFilms, i) => {
-            console.log('====== Boucle films', AffichesFilms)
+        
+        var filmsCard = this.props.LesFilms.map((data, i) => {
+            console.log('====== Boucle films', data.films.poster_path)
             
             return (
-                <Card key={i}><Image  style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + AffichesFilms.affiche }} /></Card>
+                <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
                 
             )
         })
@@ -164,6 +143,14 @@ export default class HomeScreen extends Component{
         );
     }
 }
+
+
+function mapStateToProps(state) {
+    console.log(state)
+    return { LesFilms: state.filmData };
+}
+
+export default connect(mapStateToProps, null)(HomeScreen);
 
 
 const styles = StyleSheet.create({

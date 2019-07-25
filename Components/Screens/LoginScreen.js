@@ -5,10 +5,23 @@ import {
     StyleSheet,
 } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
+import { connect } from 'react-redux';
+class LoginScreen extends React.Component {
 
-export default class LoginScreen extends React.Component {
+    componentWillMount() {
+        fetch('https://feelmapp.herokuapp.com/listMovies').then(response => {
+            return response.json();
+        }).then(dataFilms => {
+
+            this.props.FilmsHandled(dataFilms)
+
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 
     render() {
+        
         return (
             <ImageBackground source={require('../../assets/bg_Loggin.jpg')} style={{ width: '100%', height: '100%' }}>
                 <View style={styles.container}>
@@ -32,6 +45,26 @@ export default class LoginScreen extends React.Component {
         );
     }
 }
+function mapDispatchToProps(dispatch) {
+
+    return {
+        FilmsHandled: function (FilmsFetch) {
+            console.log('FilmsHandled ======', FilmsFetch.movie[1]._id, FilmsFetch.movie[1].poster_path)
+            dispatch({
+                type: 'films',
+                films: FilmsFetch,
+                
+            })
+            
+        }
+    }
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(LoginScreen);
+
 
 const styles = StyleSheet.create({
 
