@@ -6,8 +6,21 @@ import {
 import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
+import {connect} from 'react-redux';
 
-export default class MoodScreen extends React.Component {
+class MoodScreen extends React.Component {
+
+    constructor(){
+        super();
+        this.state = {
+          onSelectClick: '',
+        }
+      }
+
+    navigationAndSelect = (toto) => {
+        this.props.onSelectClick(toto)
+        this.props.navigation.navigate('With')
+    }
 
     render() {
         return (
@@ -41,7 +54,7 @@ export default class MoodScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.navigationAndSelect("heureux")}
                     />
                     <Button containerStyle={styles.ButtonMood}
                         title="Triste"
@@ -58,7 +71,7 @@ export default class MoodScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.navigationAndSelect("triste")}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -74,7 +87,7 @@ export default class MoodScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.navigationAndSelect("second")}
                     />
                     <Button containerStyle={styles.ButtonMood}
                         title="S’endormir"
@@ -88,7 +101,7 @@ export default class MoodScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.navigationAndSelect("endormir")}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -104,10 +117,10 @@ export default class MoodScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.navigationAndSelect("réfléchir")}
                     />
                     <Button containerStyle={styles.ButtonMood}
-                        title=" Être surpris"
+                        title="Être surpris"
                         type="clear"
                         icon={
                             <SvgUri
@@ -119,15 +132,61 @@ export default class MoodScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%'  }}
 
-                        onPress={() => this.props.navigation.navigate('With')}
+                        onPress={() => this.navigationAndSelect("surpris")}
                     />
+                    </View>
 
+                    <View style={styles.Mood}>
+                    <Button containerStyle={styles.ButtonMood}
+                        title="Pas prise de tête"
+                        type="clear"
+                        icon={
+                            <SvgUri
+                                width="70"
+                                height="70"
+                                source={require('../../assets/icones/svg/016-shocked.svg')}
+                            />
+                        }
+                        titleStyle={styles.TitleButton}
+                        buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%'  }}
+
+                        onPress={() => this.navigationAndSelect("tete")}
+                    />
+                    <Button containerStyle={styles.ButtonMood}
+                        title="Evasion"
+                        type="clear"
+                        icon={
+                            <SvgUri
+                                width="70"
+                                height="70"
+                                source={require('../../assets/icones/svg/016-shocked.svg')}
+                            />
+                        }
+                        titleStyle={styles.TitleButton}
+                        buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%'  }}
+
+                        onPress={() => this.navigationAndSelect("evasion")}
+                    />
                 </View>
+                
                
                 </View>
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+     onSelectClick: function(moodState) { 
+       dispatch( {type: 'mood', mood : moodState} ) 
+     }
+    }
+   }
+
+export default connect(
+    null, 
+    mapDispatchToProps
+  )(MoodScreen);
 
 const styles = StyleSheet.create({
 
@@ -137,7 +196,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#13172F'
     },
     Mood: {
-        height: '22%',
+        height: '20%',
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop: 10,

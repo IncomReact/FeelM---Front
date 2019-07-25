@@ -6,8 +6,21 @@ import {
 import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
+import {connect} from 'react-redux';
 
-export default class TypeScreen extends React.Component {
+class TypeScreen extends React.Component {
+
+    constructor(){
+        super();
+        this.state = {
+          onSelectClick: '',
+        }
+      }
+
+    navigationAndSelect = (toto) => {
+        this.props.onSelectClick(toto)
+        this.props.navigation.navigate('Home')
+    }
 
     render() {
         return (
@@ -37,7 +50,7 @@ export default class TypeScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.navigationAndSelect("film")}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -54,7 +67,7 @@ export default class TypeScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.navigationAndSelect("film")}
                     />
                 </View>
                 <View style={styles.Mood}>
@@ -71,7 +84,7 @@ export default class TypeScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.navigationAndSelect("film")}
                     />
 
                 </View>
@@ -80,6 +93,19 @@ export default class TypeScreen extends React.Component {
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+     onSelectClick: function(typeState) { 
+       dispatch( {type: 'type', format : typeState} ) 
+     }
+    }
+   }
+
+export default connect(
+    null, 
+    mapDispatchToProps
+  )(TypeScreen);
 
 const styles = StyleSheet.create({
 
