@@ -22,6 +22,7 @@ import LinkVodScreen from '../Screens/LinkVodScreen';
 import LinkBuyScreen from '../Screens/LinkBuyScreen';
 import LinkStreamScreen from '../Screens/LinkStreamScreen';
 import VodWebviewScreen from '../Screens/LinkVodWebviewScreen';
+import YoutubeScreen from '../Screens/YoutubeScreen'
 const navigator = createDrawerNavigator(
     {
         Home: HomeScreen,
@@ -85,7 +86,7 @@ const navigator = createDrawerNavigator(
 //     });
 
 var StackNavigator = createStackNavigator({
-    Home: HomeScreen,
+    
     Login: LoginScreen,
     Type: TypeScreen,
     Mood: MoodScreen,
@@ -103,7 +104,7 @@ var StackNavigator = createStackNavigator({
     Film: FilmScreen,
     Search: SearchMovieScreen,
     Webview: VodWebviewScreen,
-
+    Youtube: YoutubeScreen,
     navigator : navigator
 }, { headerMode: 'none' })
 

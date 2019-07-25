@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerActions } from 'react-navigation';
+import YoutubeScreen from './YoutubeScreen'
 
 export default class FilmScreen extends Component {
 
@@ -36,39 +37,42 @@ export default class FilmScreen extends Component {
                     <Tile
                         imageSrc={require('../../assets/fil_BG.jpg')}
                         icon={{ name: 'play-circle', type: 'font-awesome', color: '#fff', size: 50, marginTop: 30 }}
-                        featured
+                        featuredxz
+                        onPress={() => this.props.navigation.navigate('Youtube')}
+
                     />
 
                 </View >
 
-                <View style={styles.marge}>
-                    <View style={styles.container2}>
-                        <Image
-                            source={require('../../assets/aff2.jpg')}
-                            style={styles.vignette}
-                        />
-                        <View>
-                            <Text style={styles.h1}>
-                                Intouchable
+
+                <View style={styles.container2}>
+                    <Image
+                        source={require('../../assets/aff1.jpg')}
+                        style={styles.vignette}
+                    />
+                    <View>
+                        <Text style={styles.h1}>
+                            Intouchable
                         </Text>
 
-                            <Text style={styles.infosFilm}>
-                                Date de sortie : 02/11/2011
+                        <Text style={styles.infosFilm}>
+                            Date de sortie : 02/11/2011
                         </Text>
 
-                            <View style={styles.stars}>
-                                <Rating
-                                    imageSize={25}
-                                    readonly
-                                    startingValue={rating}
-                                    startingValue={4.5}
-                                    type='custom'
-                                    tintColor='#13172F'
-                                />
-                            </View>
+                        <View style={styles.stars}>
+                            <Rating
+                                imageSize={25}
+                                readonly
+                                startingValue={rating}
+                                startingValue={4.5}
+                                type='custom'
+                                tintColor='#13172F'
+                            />
                         </View>
                     </View>
+                </View>
 
+                <View style={styles.margeInterne}>
                     <View style={styles.content}>
                         <Text style={styles.h2}>
                             Synopsis
@@ -123,6 +127,8 @@ export default class FilmScreen extends Component {
                 </View>
 
 
+
+
             </View>
 
 
@@ -140,9 +146,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#13172F',
     },
 
-    marge: {
-        marginLeft: 20,
-        marginRight: 20
+    margeInterne: {
+        paddingLeft: 20,
+        paddingRight: 20
     },
     container2: {
         flexDirection: 'row',
@@ -152,6 +158,8 @@ const styles = StyleSheet.create({
         borderColor: "#13172F",
         borderWidth: 1,
         backgroundColor: '#13172F',
+        paddingLeft: 20,
+        paddingRight: 20
     },
     featured: {
         marginTop: -90,

@@ -4,7 +4,7 @@ import {
     Text,
     View,
     TouchableOpacity,
-    Image, ImageBackground
+    Image, Animated, ActivityIndicator
 } from 'react-native';
 import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -12,6 +12,7 @@ import SvgUri from 'react-native-svg-uri';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerActions } from 'react-navigation';
+import LottieView from 'lottie-react-native';
 
 export default class HomeScreen extends Component{
     constructor(props) {
@@ -19,11 +20,13 @@ export default class HomeScreen extends Component{
         
         this.state = {
             movies: [],
-            status: null
+            status: null,
+           
         };
     }
     componentWillMount() {
         this.setState({ status: 'Chargement des films en cours ...' });
+        
     };
     componentDidMount() {
         fetch('https://feelmapp.herokuapp.com/listMovies').then(response => {
@@ -38,7 +41,7 @@ export default class HomeScreen extends Component{
                     affiche: dataFilms.movie[i].poster_path,
 
                 })
-                this.setState({ movies: filmCopy, });
+                this.setState({ movies: filmCopy, state: null});
             }
 
             console.log('FilmCopy -----', filmCopy)
@@ -49,6 +52,7 @@ export default class HomeScreen extends Component{
 
     };
     render() {
+        const loading  = this.state;
         var filmsCard = this.state.movies.map((AffichesFilms, i) => {
             console.log('====== Boucle films', AffichesFilms)
             
@@ -58,6 +62,7 @@ export default class HomeScreen extends Component{
             )
         })
        
+        
 
         // 
         return (
@@ -81,8 +86,9 @@ export default class HomeScreen extends Component{
                     centerComponent={<Image style={{ width: 110, height: 25,}} source={require('../../assets/logo_feelm.png')}/>}
                     containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex:100 }}
                 />
-                
+               
                 <View style={{marginTop:100}}>
+                    
                     <LinearGradient
                         colors={['rgba(19,23,47,0)', 'rgba(19,23,47,1)', 'rgba(19,23,47,1)',]}
                         style={{
@@ -94,6 +100,7 @@ export default class HomeScreen extends Component{
                         }}
                     />
                     
+
                 <CardStack
                     style={styles.content}
                     renderNoMoreCards={() => <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :(</Text>}   
@@ -108,7 +115,6 @@ export default class HomeScreen extends Component{
                         {filmsCard.sort(function (a, b) { return 0.5 - Math.random() })}
 
                 </CardStack>
-                    
                         <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />
                     
                 <View style={{alignItems:'center'}}>   
