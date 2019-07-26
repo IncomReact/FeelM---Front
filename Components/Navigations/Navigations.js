@@ -105,6 +105,9 @@ var StackNavigator = createStackNavigator({
     Search: SearchMovieScreen,
     Webview: VodWebviewScreen,
     Youtube: YoutubeScreen,
+
+
+    
     navigator : navigator
 }, { headerMode: 'none' })
 

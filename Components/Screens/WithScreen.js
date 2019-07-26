@@ -7,6 +7,7 @@ import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import {connect} from 'react-redux';
+import AnimatedLoader from "react-native-animated-loader";
 
 class WithScreen extends React.Component {
 
@@ -14,13 +15,25 @@ constructor(){
     super();
     this.state = {
       onSelectClick: '',
+        visible: false
     }
   }
 
-  navigationAndSelect = (toto) => {
-    this.props.onSelectClick(toto)
-    this.props.navigation.navigate('Type')
-}
+
+    navigationAndSelect = (toto) => {
+
+        this.props.onSelectClick(toto)
+        this.setState({
+            visible: !this.state.visible
+        });
+        setTimeout(() => {
+            console.log('setInterval ========');
+            this.setState({
+                visible: false
+            });
+            this.props.navigation.navigate('Type')
+        }, 500);
+    }
 
 
 render() {
@@ -44,6 +57,13 @@ render() {
             />
             {/***************************** Boutons ********************************/}
             <View style={styles.Mood}>
+                <AnimatedLoader
+                    visible={this.state.visible}
+                    overlayColor="rgba(19,23,47,1)"
+                    source={require("./dino.json")}
+                    animationStyle={styles.lottie}
+                    speed={1}
+                />
                 <Button containerStyle={styles.ButtonMood}
                     title="Mes Enfants"
                     type="clear"
@@ -155,6 +175,10 @@ container: {
     flex: 1,
     backgroundColor: '#13172F'
 },
+    lottie: {
+        width: 300,
+        height: 300
+    },
 Mood: {
     height: '13%',
     flexDirection: 'row',

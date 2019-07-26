@@ -7,6 +7,8 @@ import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import {connect} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
+import AnimatedLoader from "react-native-animated-loader";
 
 class TypeScreen extends React.Component {
 
@@ -14,15 +16,30 @@ class TypeScreen extends React.Component {
         super();
         this.state = {
           onSelectClick: '',
+            visible: false
         }
       }
 
     navigationAndSelect = (toto) => {
+        console.log('@@@@@@@@@@@@@@@@');
         this.props.onSelectClick(toto)
-        this.props.navigation.navigate('Home')
+        this.setState({
+            visible: !this.state.visible
+        });
+        setTimeout(() => {
+            console.log('setInterval ========');
+            this.setState({
+                visible: false
+            });
+            this.props.navigation.navigate('Home')
+        },2500);
+        
+
+        
     }
 
     render() {
+        const { visible } = this.state;
         return (
             // // // // // View Principale  // // // // // //
             <View style={styles.container}>
@@ -38,6 +55,20 @@ class TypeScreen extends React.Component {
                 />
                 {/***************************** Boutons ********************************/}
                 <View style={styles.Mood}>
+                    <AnimatedLoader
+                        visible={this.state.visible}
+                        overlayColor="rgba(19,23,47,1)"
+                        source={require("./robot.json")}
+                        animationStyle={styles.lottie}
+                        speed={1}
+                    />
+                    {/* <Spinner
+                        visible={this.state.spinner}
+                        textContent={'Loading...'}
+                        textStyle={styles.spinnerTextStyle}
+                        source={require("./dino.json")}
+                        animation='slide'
+                    /> */}
                     <Button containerStyle={styles.ButtonMood}
                         title="Films"
                         type="clear"
@@ -114,6 +145,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#13172F',
         justifyContent: 'flex-start'
     },
+    lottie: {
+        width: 300,
+        height: 300
+    },
     Mood: {
         height: '13%',
         flexDirection: 'row',
@@ -122,7 +157,9 @@ const styles = StyleSheet.create({
         marginRight: 15,
         marginLeft: 15,
     },
-
+    spinnerTextStyle: {
+        color: '#FFF'
+    },
     ButtonMood: {
         flex: 1,
         width: '100%',

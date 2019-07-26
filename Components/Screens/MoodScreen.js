@@ -7,6 +7,7 @@ import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import {connect} from 'react-redux';
+import AnimatedLoader from "react-native-animated-loader";
 
 class MoodScreen extends React.Component {
 
@@ -14,13 +15,26 @@ class MoodScreen extends React.Component {
         super();
         this.state = {
           onSelectClick: '',
+            visible: false
         }
       }
 
     navigationAndSelect = (toto) => {
+       
         this.props.onSelectClick(toto)
-        this.props.navigation.navigate('With')
+        this.setState({
+            visible: !this.state.visible
+        });
+        setTimeout(() => {
+            console.log('setInterval ========');
+            this.setState({
+                visible: false
+            });
+            this.props.navigation.navigate('With')
+        }, 500);
     }
+    
+
 
     render() {
         return (
@@ -42,6 +56,13 @@ class MoodScreen extends React.Component {
                     containerStyle={{ backgroundColor: '#13172F', justifyContent: 'space-around', borderBottomColor: '#13172F' }}
                 />
                 <View style={styles.Mood}>
+                    <AnimatedLoader
+                        visible={this.state.visible}
+                        overlayColor="rgba(19,23,47,1)"
+                        source={require("./dino.json")}
+                        animationStyle={styles.lottie}
+                        speed={1}
+                    />
                     <Button containerStyle={styles.ButtonMood}
                         title="Heureux"
                         type="clear"
@@ -194,6 +215,10 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         backgroundColor:'#13172F'
+    },
+    lottie: {
+        width: 300,
+        height: 300
     },
     Mood: {
         height: '20%',

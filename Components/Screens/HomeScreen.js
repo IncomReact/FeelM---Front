@@ -14,6 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerActions } from 'react-navigation';
 import LottieView from 'lottie-react-native';
 import { connect } from 'react-redux';
+import AnimatedLoader from "react-native-animated-loader";
 
 class HomeScreen extends Component{
     constructor(props) {
@@ -22,7 +23,8 @@ class HomeScreen extends Component{
         this.state = {
             movies: [],
             status: null,
-            
+            nSelectClick: '',
+            visible: false
         };
     }
     
@@ -30,7 +32,16 @@ class HomeScreen extends Component{
         this.setState({ status: 'Chargement des films en cours ...' });
         
     };
-    
+    navigationAndSelect = () => {
+        this.setState({
+            visible: !this.state.visible
+        });
+        setTimeout(() => {
+            this.setState({
+                visible: false
+            });
+        }, 1000, );
+    }
     render() {
 
         
@@ -46,6 +57,7 @@ class HomeScreen extends Component{
         // })
        
         var filmsCard = this.props.Movies.map((data, i) => {
+
             var arr1 = data.films.mood;
             var arr2 = data.films.avec_qui;
             var arr3 = this.props.filterData;
@@ -56,8 +68,7 @@ class HomeScreen extends Component{
             console.log('cat ============', arr4);
             for (let b = 0; b < arr1.length; b++) {
                 arr1
-                
-            
+  
 
             // for (let c = 0; c < arr2.length; c++) {
             //     console.log(arr2);
@@ -72,7 +83,7 @@ class HomeScreen extends Component{
             if (arr1[b] === arr3[0] && arr2[1] === arr2[i] && arr4 === arr3[2]) {
                 
                 return (
-                    <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
+                    <Card key={i}><Image IMG={data.films.poster_path} style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
                 )
             } 
                 
@@ -96,7 +107,7 @@ class HomeScreen extends Component{
                     barStyle="light-content"
                     leftComponent={<Button containerStyle={styles.ButtonMood}
                         type="clear"
-                        onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }}
+                        onPress={() => { this.props.navigation.toggleDrawer() }}
                         icon={
                             <SvgUri
                                 width="30"
@@ -110,7 +121,13 @@ class HomeScreen extends Component{
                     centerComponent={<Image style={{ width: 110, height: 25,}} source={require('../../assets/logo_feelm.png')}/>}
                     containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex:100 }}
                 />
-               
+                <AnimatedLoader
+                    visible={this.state.visible}
+                    overlayColor="rgba(19,23,47,0.9)"
+                    source={require("./star.json")}
+                    animationStyle={styles.lottie}
+                    speed={1}
+                />
                 <View style={{marginTop:100}}>
                     
                     <LinearGradient
@@ -127,24 +144,28 @@ class HomeScreen extends Component{
                 <CardStack
                     style={styles.content}
                     renderNoMoreCards={() => 
-                    
-                    <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :( </Text>}  
+                        <View>
+                            <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :( </Text>
+                            
+                        </View>
+                    }  
                     ref={swiper => {
                         this.swiper = swiper
                     }}
                         disableBottomSwipe={true}
                         disableTopSwipe={true}
-                    onSwiped={() => console.log('onSwiped')}
-                    onSwipedLeft={() => console.log('onSwipedLeft')}
+                        onSwiped={() => console.log()}
+                        onSwipedLeft={() => console.log('onSwipedLeft')}
                 >
                         {filmsCard.sort(function (a, b) { return 0.5 - Math.random() })}
 
                 </CardStack>
                         <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />
-                    
-                <View style={{alignItems:'center'}}>   
+                      
+                <View style={{alignItems:'center'}}>  
+                        
                 <View style={styles.footer}>
-                       
+                            
                             <TouchableOpacity style={[styles.button, styles.red]} onPress={() => {
                                 this.swiper.swipeLeft();
                             }}>
@@ -166,20 +187,21 @@ class HomeScreen extends Component{
 
                </View>
                <View style={styles.footer2}>
+                             
                         <TouchableOpacity style={[styles.button, styles.blue]} onPress={() => {
                             this.swiper.goBackFromLeft();
                         }}>
                             <SvgUri source={require('../../assets/icones/svg/go-back.svg')} width="28"
                                 height="28" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.yellow]} onPress={() => {
-                            this.swiper.swipeRight();
-                        }}>
+                            <TouchableOpacity activeOpacity={0.8} style={[styles.button, styles.yellow]} onPress={() => this.navigationAndSelect("Favoris")
+                        }>
                             <SvgUri source={require('../../assets/icones/svg/fav.svg')} width="28"
                                 height="28" />
                         </TouchableOpacity>
                 </View> 
-             </View>             
+             </View>   
+                           
                 </View>
                
                 </View>
@@ -201,6 +223,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#13172F'
+    },
+    lottie: {
+        width: 300,
+        height: 300,
+        zIndex: -100,
     },
     Mood: {
         flexDirection: 'row',
