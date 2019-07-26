@@ -67,7 +67,7 @@ class TypeScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
-                        onPress={() => this.navigationAndSelect("film")}
+                        onPress={() => this.navigationAndSelect("serie")}
                     />
                 </View>
                 <View style={styles.Mood}>

@@ -12,7 +12,6 @@ class LoginScreen extends React.Component {
         fetch('https://feelmapp.herokuapp.com/listMovies').then(response => {
             return response.json();
         }).then(dataFilms => {
-
             this.props.FilmsHandled(dataFilms)
 
         }).catch(err => {
@@ -49,7 +48,6 @@ function mapDispatchToProps(dispatch) {
 
     return {
         FilmsHandled: function (FilmsFetch) {
-            console.log('FilmsHandled ======', FilmsFetch.movie[1]._id, FilmsFetch.movie[1].poster_path)
             dispatch({
                 type: 'films',
                 films: FilmsFetch,

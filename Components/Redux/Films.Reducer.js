@@ -11,7 +11,6 @@ export default function (filmData = [], action) {
                 films : action.films.movie[i]
 
             })
-            console.log('Redux FilmData  ====================', action.films.movie[i].poster_path);
         }
 
         

@@ -1,7 +1,6 @@
 export default function ( filterData = [], action) {
 
     var copyfilterData = [...filterData]
-    console.log('Redux ==========',action)
 
     if (action.type == 'mood') {
 

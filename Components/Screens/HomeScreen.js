@@ -22,7 +22,7 @@ class HomeScreen extends Component{
         this.state = {
             movies: [],
             status: null,
-           
+            
         };
     }
     
@@ -32,16 +32,60 @@ class HomeScreen extends Component{
     };
     
     render() {
+
         
-        var filmsCard = this.props.LesFilms.map((data, i) => {
-            console.log('====== Boucle films', data.films.poster_path)
-            
-            return (
-                <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
-                
-            )
-        })
+        // console.log('========== Mood Redux ', this.props.filterData);
+        // // this.props.LesFilms.map((cat, b) => {
+        // //     console.log('========== Catégories', cat.films.cat);
+        // // })
+        // this.props.Movies.map((mood, b) => {
+        //     console.log('========== Mood Mongo DB', mood.films.mood);
+        // })
+        // this.props.Movies.map((avec, b) => {
+        //     console.log('========== Avec qui Mongo DB', avec.films.avec_qui);
+        // })
        
+        var filmsCard = this.props.Movies.map((data, i) => {
+            var arr1 = data.films.mood;
+            var arr2 = data.films.avec_qui;
+            var arr3 = this.props.filterData;
+            var arr4 = data.films.cat
+            console.log('mood ======== ', arr1);
+            console.log('avec_qui ============', arr2);
+            console.log('filterData ======== ', arr3);
+            console.log('cat ============', arr4);
+            for (let b = 0; b < arr1.length; b++) {
+                arr1
+                
+            
+
+            // for (let c = 0; c < arr2.length; c++) {
+            //     console.log(arr2);
+            //     arr2
+            // }
+
+            // for (let a = 0; a < arr3.length; a++) {
+            //     console.log(arr3);
+                
+            // }
+            
+            if (arr1[b] === arr3[0] && arr2[1] === arr2[i] && arr4 === arr3[2]) {
+                
+                return (
+                    <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
+                )
+            } 
+                
+            }
+            // if (arr1[i] === arr2 === arr3) {
+            //     console.log('OUI');
+            // } else {
+            //     console.log('NON');
+            // }
+            console.log(data.films.poster_path);
+            
+            })
+        console.log('Images ...', this.state.movies);
         
 
         // 
@@ -79,11 +123,12 @@ class HomeScreen extends Component{
                             height: '100%',
                         }}
                     />
-                    
 
                 <CardStack
                     style={styles.content}
-                    renderNoMoreCards={() => <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :(</Text>}   
+                    renderNoMoreCards={() => 
+                    
+                    <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :( </Text>}  
                     ref={swiper => {
                         this.swiper = swiper
                     }}
@@ -146,8 +191,7 @@ class HomeScreen extends Component{
 
 
 function mapStateToProps(state) {
-    console.log(state)
-    return { LesFilms: state.filmData };
+    return { Movies: state.filmData, filterData: state.filterData };
 }
 
 export default connect(mapStateToProps, null)(HomeScreen);
