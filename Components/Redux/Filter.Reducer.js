@@ -1,13 +1,13 @@
 export default function ( filterData = [], action) {
 
     var copyfilterData = [...filterData]
-    console.log('Redux ==========',action)
+    // console.log('Redux ==========',action)
 
     if (action.type == 'mood') {
 
         copyfilterData.push(action.mood)
 
-        console.log('========= copy',copyfilterData)
+        // console.log('========= copy',copyfilterData)
 
         return copyfilterData;
     }
@@ -15,7 +15,7 @@ export default function ( filterData = [], action) {
     else if (action.type == 'with') {
         copyfilterData.push(action.with)
 
-        console.log('========= copy',copyfilterData)
+        // console.log('========= copy',copyfilterData)
 
         return copyfilterData;
 

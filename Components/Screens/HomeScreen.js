@@ -16,14 +16,23 @@ import LottieView from 'lottie-react-native';
 import { connect } from 'react-redux';
 
 class HomeScreen extends Component{
+
     constructor(props) {
         super(props);
         
         this.state = {
             movies: [],
             status: null,
+            // onSelectClick: null,
            
         };
+    }
+    indexFilms=0
+
+    wishlistSelect = () => {
+        this.props.onSelectClick(this.props.LesFilms[this.indexFilms])
+        console.log('variable toto ========> ', this.props.LesFilms[this.indexFilms])
+        this.props.navigation.navigate('Home')
     }
     
     componentWillMount() {
@@ -33,15 +42,24 @@ class HomeScreen extends Component{
     
     render() {
         
-        var filmsCard = this.props.LesFilms.map((data, i) => {
-            console.log('====== Boucle films', data.films.poster_path)
+        var filmsCards = this.props.LesFilms.map((data, i) => {
+           
+            // console.log('====== Boucle films', data.films.poster_path)
+            // console.log('====== Current film data', data[0])
             
+
             return (
-                <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
+                <Card key={data.films.id}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
                 
             )
         })
-       
+
+        // console.log('FilmsCard ++++++++++++++++', filmsCard)
+
+        
+    //   var filmsCard = filmsCards.sort(function (a, b) { 
+    //         return 0.5 - Math.random() 
+    //        })
         
 
         // 
@@ -85,14 +103,16 @@ class HomeScreen extends Component{
                     style={styles.content}
                     renderNoMoreCards={() => <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :(</Text>}   
                     ref={swiper => {
+                        // console.log('SWIPPPPPE',swiper)
                         this.swiper = swiper
                     }}
                         disableBottomSwipe={true}
                         disableTopSwipe={true}
-                    onSwiped={() => console.log('onSwiped')}
-                    onSwipedLeft={() => console.log('onSwipedLeft')}
+                    onSwipedRight={(index) => this.indexFilms=index+1 }
+                    onSwipedLeft={(index) => this.indexFilms=index+1 }
                 >
-                        {filmsCard.sort(function (a, b) { return 0.5 - Math.random() })}
+                        
+                            {filmsCards}
 
                 </CardStack>
                         <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />
@@ -121,17 +141,23 @@ class HomeScreen extends Component{
 
                </View>
                <View style={styles.footer2}>
-                        <TouchableOpacity style={[styles.button, styles.blue]} onPress={() => {
-                            this.swiper.goBackFromLeft();
-                        }}>
+                        <TouchableOpacity style={[styles.button, styles.blue]} 
+                        onPress={() => this.props.navigation.navigate('With')}>
+
+
                             <SvgUri source={require('../../assets/icones/svg/go-back.svg')} width="28"
                                 height="28" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.yellow]} onPress={() => {
-                            this.swiper.swipeRight();
-                        }}>
+
+                        <TouchableOpacity style={[styles.button, styles.yellow]}
+                        onPress={this.wishlistSelect}
+                        
+                        >
                             <SvgUri source={require('../../assets/icones/svg/fav.svg')} width="28"
-                                height="28" />
+                                height="28" 
+                                
+                                />
+                                
                         </TouchableOpacity>
                 </View> 
              </View>             
@@ -146,11 +172,22 @@ class HomeScreen extends Component{
 
 
 function mapStateToProps(state) {
-    console.log(state)
+    // console.log('Current film =====>>>',currentFilm)
     return { LesFilms: state.filmData };
 }
 
-export default connect(mapStateToProps, null)(HomeScreen);
+function mapDispatchToProps(dispatch) {
+    return {
+     onSelectClick: function(currentFilm) { 
+       dispatch( {type: 'wishlistFilm', wishlistFilm : currentFilm}
+        ) 
+        // console.log("currentFilm ======>>>",currentFilm)
+     }
+    }
+   }
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
 
 
 const styles = StyleSheet.create({
