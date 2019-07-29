@@ -23,102 +23,90 @@ class HomeScreen extends Component{
         this.state = {
             movies: [],
             status: null,
-            // onSelectClick: '',
+          
             visible: false
         };
     }
     indexFilms = 0
-    componentWillMount() {
-        this.setState({ status: 'Chargement des films en cours ...' });
-        
-    };
-    WishListSelect = () => {
+    wishlistSelect = () => {
         this.setState({
             visible: !this.state.visible
         });
         this.props.onSelectClick(this.props.Movies[this.indexFilms])
         console.log('variable toto ========> ', this.props.Movies[this.indexFilms])
-        this.props.navigation.navigate('Home')
         
         setTimeout(() => {
             this.setState({
                 visible: false
             });
         }, 1000);
-    }
+        this.props.navigation.navigate('Home')
+
+    };
+    componentWillMount() {
+        this.setState({ status: 'Chargement des films en cours ...' });
+        
+    };
+    // navigationAndSelect = () => {
+        
+       
+    // }
     render() {
 
         
-        
-
+        // console.log('========== Mood Redux ', this.props.filterData);
+        // // this.props.LesFilms.map((cat, b) => {
+        // //     console.log('========== Catégories', cat.films.cat);
+        // // })
+        // this.props.Movies.map((mood, b) => {
+        //     console.log('========== Mood Mongo DB', mood.films.mood);
+        // })
+        // this.props.Movies.map((avec, b) => {
+        //     console.log('========== Avec qui Mongo DB', avec.films.avec_qui);
+        // })
+       
         var filmsCard = this.props.Movies.map((data, i) => {
-
+            console.log('DATA ========', data)
             var arr1 = data.films.mood;
             var arr2 = data.films.avec_qui;
-            var arr3 = this.props.DataRedux;
+            var arr3 = this.props.filterData;
             var arr4 = data.films.cat
-
+            console.log('mood ======== ', arr1);
+            console.log('avec_qui ============', arr2);
+            console.log('filterData ======== ', arr3);
+            console.log('cat ============', arr4);
             for (let b = 0; b < arr1.length; b++) {
-                console.log(arr1);
-
-                
-            for (let c = 0; c < arr2.length; c++) {
-                console.log(arr2);
-            
+                arr1
+  
+                console.log('arr1 ========',arr1[b])
+            // for (let c = 0; c < arr2.length; c++) {
+            //     console.log(arr2);
+            //     arr2
+            // }
 
             // for (let a = 0; a < arr3.length; a++) {
-              
-
-             
-            // if (arr1[0] === arr3[0] || arr1[1] === arr3[0] || arr1[2] === arr3[0] || arr1[3] === arr3[0] 
-            //     && arr3[1] === arr2[0] || arr3[1] === arr2[1] || arr3[1] === arr2[2] 
-            //     && arr4 === arr3[2]) {
-                if (arr1[0] === arr3[0] 
-                    && arr3[1] === arr2[0]
-                    && arr4 === arr3[2]) {
-                    console.log(arr3[1] === arr2[0]);
-                // if (arr1.indexOf(arr3[0]) && arr2.indexOf(arr3[1]) && arr4 === arr3[2]  ) {
-                //     console.log("Match mood", arr1.indexOf(arr3[0]), "Match avec_qui", arr2.indexOf(arr3[1]), "Match cat",arr4 === arr3[2]);
-                         
-            return (
+            //     console.log(arr3);
                 
-                <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
-                
-            )
+            // }
             
-                    }
-                }
+            if (arr1[b] === arr3[0] && arr3[1] === arr2[i] && arr4 === arr3[2]) {
+                
+                return (
+                    <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
+                )
+            } 
                 
             }
-            
-            // var Categorie = this.props.Movies.map((category, a) => {
-            //     console.log('Catégorie =========', category.films.cat);
-            // })
-            // var Mood = this.props.Movies.map((Mood, b) => {
-            //     console.log('Mood =========', Mood.films.mood);
-            // })
-            // var Avec = this.props.Movies.map((qui, c) => {
-            //     console.log('Avec qui =========', qui.films.avec_qui);
-            // })
-            // var ReduxD = this.props.DataRedux.map((ReduxData, i) => {
-            //     console.log('ReduxData =========', ReduxData);
-            // })
-            // if (arr1[0] === arr3[0] || arr1[1] === arr3[0] || arr1[2] === arr3[0] 
-            //     && arr3[1] === arr2[0] || arr3[1] === arr2[1] || arr3[1] === arr2[2] || arr3[1] === arr2[3]
-            //     && arr4 === arr3[2] ) {
-
-            // if (arr1[0] === arr3[0] || arr1[1] === arr3[0] || arr1[2] === arr3[0]) {
+            // if (arr1[i] === arr2 === arr3) {
             //     console.log('OUI');
             // } else {
             //     console.log('NON');
             // }
+            console.log('Photooooo:::::::::',data.films.poster_path);
             
             })
-    
+        console.log('filmsCard ...', filmsCard);
         
-        // console.log(filmsCard);
-
-        // console.log('Films Matché ======= ...', filmsCard.sort(function (a, b) { return 0.5 - Math.random() }));
 
         // 
         return (
@@ -172,17 +160,14 @@ class HomeScreen extends Component{
                     }  
                     ref={swiper => {
                         this.swiper = swiper
-                        
                     }}
                         disableBottomSwipe={true}
                         disableTopSwipe={true}
-                        onSwipedRight={(index) => { this.indexFilms = index + 1, console.log(this.indexFilms) }}
-                        onSwipedLeft={(index) => { this.indexFilms = index + 1, console.log(this.indexFilms)}}
-                        
+                        onSwipedRight={(index) => this.indexFilms = index + 1}
+                        onSwipedLeft={(index) => this.indexFilms = index + 1}
                 >
-                        {/* {filmsCard.sort()} */}
-                        {filmsCard.sort(function (a, b) { return 0.5 - Math.random() })}  
-                        
+                        {filmsCard}
+
                 </CardStack>
                         <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />
                       
@@ -218,7 +203,7 @@ class HomeScreen extends Component{
                             <SvgUri source={require('../../assets/icones/svg/go-back.svg')} width="28"
                                 height="28" />
                         </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button, styles.yellow]} onPress={this.WishListSelect}>
+                            <TouchableOpacity activeOpacity={1} style={[styles.button, styles.yellow]} onPress={this.wishlistSelect}>
                             <SvgUri source={require('../../assets/icones/svg/fav.svg')} width="28"
                                 height="28" />
                         </TouchableOpacity>
@@ -236,14 +221,15 @@ class HomeScreen extends Component{
 
 
 function mapStateToProps(state) {
-    return { Movies: state.filmData, DataRedux: state.filterData };
+    console.log('!!!!!!!!!!!!!!!!!!!!',state)
+    return { Movies: state.filmData, filterData: state.filterData };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onSelectClick: function (currentFilm) {
-            dispatch({ type: 'wishlistFilm', wishlistFilm : currentFilm }
+            dispatch({ type: 'wishlistFilm', wishlistFilm: currentFilm }
             )
-            console.log("currentFilm ======>>>",currentFilm)
+            // console.log("currentFilm ======>>>",currentFilm)
         }
     }
 }
