@@ -140,7 +140,7 @@ class DrawerScreen extends React.Component {
                     /></TouchableOpacity> 
                 </View>
                 <View style={styles.Mood}>
-                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('With')}>       
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Chart')}>       
                     <Button 
                         title="Stats"
                         type="clear"
@@ -156,7 +156,7 @@ class DrawerScreen extends React.Component {
                         }
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
-                        onPress={() => this.props.navigation.navigate('With')}
+                            onPress={() => this.props.navigation.navigate('Chart')}
                     /></TouchableOpacity> 
                     <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Settings')}>
                     <Button 

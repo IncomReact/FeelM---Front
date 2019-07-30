@@ -22,7 +22,8 @@ import LinkVodScreen from '../Screens/LinkVodScreen';
 import LinkBuyScreen from '../Screens/LinkBuyScreen';
 import LinkStreamScreen from '../Screens/LinkStreamScreen';
 import VodWebviewScreen from '../Screens/LinkVodWebviewScreen';
-import YoutubeScreen from '../Screens/YoutubeScreen'
+import YoutubeScreen from '../Screens/YoutubeScreen';
+import ChartScreen from '../Screens/ChartScreen'
 const navigator = createDrawerNavigator(
     {
         Home: HomeScreen,
@@ -105,7 +106,7 @@ var StackNavigator = createStackNavigator({
     Search: SearchMovieScreen,
     Webview: VodWebviewScreen,
     Youtube: YoutubeScreen,
-
+    Chart: ChartScreen,
 
     
     navigator : navigator

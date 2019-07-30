@@ -7,14 +7,17 @@ import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import * as Permissions from 'expo-permissions';
-import { Camera } from 'expo-camera'
+import { Camera } from 'expo-camera';
+import AnimatedLoader from "react-native-animated-loader";
+
 export default class TypeScreen extends React.Component {
     state = {
         permision: null,
         type: Camera.Constants.Type.back,
         Name: '',
         LastName: '',
-        picture: []
+        picture: [],
+        visible: false
     };
 
     async componentDidMount() {
@@ -24,6 +27,15 @@ export default class TypeScreen extends React.Component {
     }
 
     onPictureSaved = async photo => {
+        this.setState({
+            visible: !this.state.visible
+        });
+        setTimeout(() => {
+            this.setState({
+                visible: false
+            });
+            this.props.navigation.navigate('Home')
+        }, 4000);
         console.log(photo.uri);
 
         console.log(photo.width);
@@ -75,6 +87,13 @@ export default class TypeScreen extends React.Component {
                         containerStyle={{ backgroundColor: 'rgba(0, 0,0, 0)', justifyContent: 'space-around', borderBottomColor: 'rgba(0, 0,0, 0)' }}
                     />
                     <View style={styles.inputContainer}>
+                        <AnimatedLoader
+                            visible={this.state.visible}
+                            overlayColor="rgba(19,23,47,0.5)"
+                            source={require("./scan.json")}
+                            animationStyle={styles.lottie}
+                            speed={1}
+                        />
                         <TouchableOpacity style={[styles.Close, styles.red]} onPress={() => this.props.navigation.goBack()} >
                             <SvgUri source={require('../../assets/close.svg')} width="28"
                                 height="28" />
@@ -153,6 +172,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
 
+    },
+    lottie: {
+        flex: 1,
     },
     BackCamera: {
         width: '20%', marginBottom: 80,
