@@ -2,14 +2,14 @@ import React from 'react';
 import {
     View,
     ImageBackground,
-    StyleSheet,
+    StyleSheet, TouchableOpacity
 } from 'react-native';
-import { Button, Header, Avatar, Text } from 'react-native-elements';
+import { Button, AsyncStorage, Avatar, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
-
-export default class LoginScreen extends React.Component {
-
+import { connect } from 'react-redux';
+class DrawerScreen extends React.Component {
+   
     render() {
         return (
             <View style={styles.container}>
@@ -22,20 +22,18 @@ export default class LoginScreen extends React.Component {
                         rounded
 
                         source={{
-                            uri:
-                                'https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/58659893_3214554075237045_7885584668697821184_o.jpg?_nc_cat=111&_nc_oc=AQlQdsbEKXbzMhGLuqKiqAPMssArWGyPg0nPELRgjqnkoXy1GijksMGC06DISd_arfE&_nc_ht=scontent-bru2-1.xx&oh=2a82b6328bce5aafd9c3e6957bbca2aa&oe=5DE9B389',
+                            uri: decodeURIComponent(this.props.user.picture),
                         }}
-                        showEditButton
                     />
                     <View>
                         <Text h4 h4Style={{ fontSize: 18, color: '#7A8B97', textAlign: 'left' }}>Hello</Text>
-                        <Text h4 h4Style={{ fontSize: 18, color: '#fff', fontWeight: 'bold', textAlign: 'left' }}>Romain</Text>
+                        <Text h4 h4Style={{ fontSize: 18, color: '#fff', fontWeight: 'bold', textAlign: 'left' }}>{this.props.user.firstName}</Text>
                     </View>
                     
                 </View>
                     <View style={styles.Mood}>
-                        
-                        <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Mood')}>   
+                        <Button 
                             title="Mon Mood"
                             type="clear"
 
@@ -52,7 +50,9 @@ export default class LoginScreen extends React.Component {
                             buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                             onPress={() => this.props.navigation.navigate('Mood')}
                         />
-                    <Button containerStyle={styles.ButtonMood}
+                    </TouchableOpacity> 
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('FaceFeelM')}> 
+                    <Button
                         title="FeceFeelM"
                         type="clear"
                         icon={
@@ -66,10 +66,12 @@ export default class LoginScreen extends React.Component {
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.props.navigation.navigate('FaceFeelM')}
                     />
+                    </TouchableOpacity> 
                     </View>
-                <View style={styles.Mood}>
 
-                    <Button containerStyle={styles.ButtonMood}
+                <View style={styles.Mood}>
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Wishlist')}>    
+                    <Button 
                         title="Wishlist"
                         type="clear"
 
@@ -85,8 +87,9 @@ export default class LoginScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.props.navigation.navigate('Wishlist')}
-                    />
-                    <Button containerStyle={styles.ButtonMood}
+                    /></TouchableOpacity> 
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Search')}>
+                    <Button 
                         title="Rechercher"
                         type="clear"
                         icon={
@@ -99,11 +102,11 @@ export default class LoginScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.props.navigation.navigate('Search')}
-                    />
+                    /></TouchableOpacity> 
                 </View>
                 <View style={styles.Mood}>
-
-                    <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('TopFilm')}>
+                    <Button 
                         title="Top Films"
                         type="clear"
 
@@ -119,8 +122,9 @@ export default class LoginScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.props.navigation.navigate('TopFilm')}
-                    />
-                    <Button containerStyle={styles.ButtonMood}
+                    /></TouchableOpacity> 
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('BoxOffice')}>
+                    <Button 
                         title="Box Office"
                         type="clear"
                         icon={
@@ -133,11 +137,11 @@ export default class LoginScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.props.navigation.navigate('BoxOffice')}
-                    />
+                    /></TouchableOpacity> 
                 </View>
                 <View style={styles.Mood}>
-
-                    <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('With')}>       
+                    <Button 
                         title="Stats"
                         type="clear"
 
@@ -153,8 +157,9 @@ export default class LoginScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.props.navigation.navigate('With')}
-                    />
-                    <Button containerStyle={styles.ButtonMood}
+                    /></TouchableOpacity> 
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Settings')}>
+                    <Button 
                         title="Paramètres"
                         type="clear"
                         icon={
@@ -167,7 +172,7 @@ export default class LoginScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.props.navigation.navigate('Settings')}
-                    />
+                    /></TouchableOpacity> 
                 </View>
                 <View style={styles.Mood}>
 
@@ -183,8 +188,9 @@ export default class LoginScreen extends React.Component {
                         }
                         titleStyle={styles.Logout}
                         buttonStyle={{ flexDirection: 'row', flex: 1, width: '100%', alignItems:'center', justifyContent:'flex-start' }}
-                        onPress={() => this.props.navigation.navigate('Login')}
-                    />
+                        // onPress={() => this.props.navigation.navigate('Login')}
+                        
+                />
                 </View>
                    
                 </View>
@@ -192,7 +198,14 @@ export default class LoginScreen extends React.Component {
         );
     }
 }
+function mapStateToProps(state) {
 
+    return { user: state.user }
+}
+export default connect(
+    mapStateToProps,
+    null
+)(DrawerScreen);
 const styles = StyleSheet.create({
 
     container: {

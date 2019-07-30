@@ -13,7 +13,6 @@ class LoginScreen extends React.Component {
         AsyncStorage.getItem("user", (error, data) => {
             var userData = JSON.parse(data);
 
-            console.log("userData=======", userData);
             this.props.signin(userData)
         })
     }
@@ -36,14 +35,14 @@ class LoginScreen extends React.Component {
             authUrl:
                 'https://feelmapp.herokuapp.com/auth/facebook?redirectUrl=' + redirectUrl
         });
-        console.log("Retour de Facebook --> ", result);
+        // console.log("Retour de Facebook --> ", result);
         if (result.type === 'success') {
             this.props.signin(result.params)
             AsyncStorage.setItem("user", JSON.stringify(
                 result.params
             ))
 
-            console.log("result.params", result.params);
+            // console.log("result.params", result.params);
 
             // this.props.navigation.navigate('Mood');
         }
@@ -88,7 +87,7 @@ class LoginScreen extends React.Component {
     }
 }
 function mapStateToProps(state) {
-    console.log('state ===== ', state)
+    
     return { user: state.user }
 }
 

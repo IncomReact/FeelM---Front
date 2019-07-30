@@ -26,12 +26,11 @@ class MoodScreen extends React.Component {
             visible: !this.state.visible
         });
         setTimeout(() => {
-            console.log('setInterval ========');
             this.setState({
                 visible: false
             });
             this.props.navigation.navigate('With')
-        }, 1500);
+        }, 1000);
     }
   
     render() {
@@ -59,7 +58,7 @@ class MoodScreen extends React.Component {
                         overlayColor="rgba(19,23,47,1)"
                         source={require("./check2.json")}
                         animationStyle={styles.lottie}
-                        speed={1}
+                        speed={1.5}
                     />
                     <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("heureux")}>
                     <Button 
@@ -205,10 +204,10 @@ class MoodScreen extends React.Component {
 function mapDispatchToProps(dispatch) {
     return {
      onSelectClick: function(moodState) { 
-       dispatch( {type: 'mood', mood : moodState} ) 
+       dispatch( {type: 'mood', mood : moodState, clear : true} ) 
      }
     }
-   }
+}
 
 export default connect(
     null, 

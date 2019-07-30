@@ -7,7 +7,7 @@ export default function ( wishlistData = [], action) {
 
         copywishlistData.push(action.wishlistFilm)
 
-        console.log('=========>>>>>>>>>>>>> copywishlistData',copywishlistData)
+        // console.log('=========>>>>>>>>>>>>> copywishlistData',copywishlistData)
 
         return copywishlistData;
     }

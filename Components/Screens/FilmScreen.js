@@ -7,18 +7,18 @@ import {
     Image,
     ImageBackground
 } from 'react-native';
-import { Button, Header, Tile, Rating } from 'react-native-elements';
+import { Button, Header, Tile,} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerActions } from 'react-navigation';
-import YoutubeScreen from './YoutubeScreen'
-
-export default class FilmScreen extends Component {
+import { connect } from 'react-redux';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+import Moment from 'moment';
+class FilmScreen extends Component {
 
     render() {
 
-        const { rating } = this.props; // Etoiles
 
         return (
             <View style={styles.container}>
@@ -35,7 +35,7 @@ export default class FilmScreen extends Component {
                 />
                 <View style={styles.featured}>
                     <Tile
-                        imageSrc={require('../../assets/fil_BG.jpg')}
+                        imageSrc={{ uri: 'https://image.tmdb.org/t/p/w500' + this.props.Detail.films.poster_path }}
                         icon={{ name: 'play-circle', type: 'font-awesome', color: '#fff', size: 50, marginTop: 30 }}
                         featuredxz
                         onPress={() => this.props.navigation.navigate('Youtube')}
@@ -44,27 +44,28 @@ export default class FilmScreen extends Component {
 
                 </View >
 
-
+            
                 <View style={styles.container2}>
                     <Image
-                        source={require('../../assets/aff1.jpg')}
+                        source={{ uri: 'https://image.tmdb.org/t/p/w500' + this.props.Detail.films.poster_path}}
                         style={styles.vignette}
                     />
                     <View>
                         <Text style={styles.h1}>
-                            Intouchable
+                            {this.props.Detail.films.title}
                         </Text>
 
                         <Text style={styles.infosFilm}>
-                            Date de sortie : 02/11/2011
+                            
+                            Date de sortie : {Moment(this.props.Detail.films.release_date).format('DD-MM-YYYY')}
                         </Text>
 
                         <View style={styles.stars}>
                             <Rating
+                                count={this.props.Detail.films.vote_average}
                                 imageSize={25}
                                 readonly
-                                startingValue={rating}
-                                startingValue={4.5}
+                                ratingCount={5}
                                 type='custom'
                                 tintColor='#13172F'
                             />
@@ -78,7 +79,7 @@ export default class FilmScreen extends Component {
                             Synopsis
                         </Text>
                         <Text style={styles.contentSynopsis}>
-                            Le film raconte l'histoire vraie d'un homme riche et handicapé qui aime prendre des risques, l'exemple parfait de l'aristocrate français. Il a perdu sa femme lors d'un accident
+                            {this.props.Detail.films.overview.substr(0, 220) + ' ...'}
                         </Text>
                     </View>
 
@@ -136,9 +137,11 @@ export default class FilmScreen extends Component {
         );
     }
 }
-// onPress = {() => {
-//     this.swiper.goBackFromLeft();
-// }}
+function mapStateToProps(state) {
+    console.log('State =====',state)
+    return { Detail: state.DetailsFilmData};
+}
+export default connect(mapStateToProps, null)(FilmScreen);
 
 const styles = StyleSheet.create({
     container: {

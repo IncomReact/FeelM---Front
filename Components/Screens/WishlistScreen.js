@@ -1,89 +1,137 @@
 import React from 'react';
 import {
     View,
-    StyleSheet, Text, Image, ScrollView
+    StyleSheet, Text, Image, ScrollView, Alert
 } from 'react-native';
-import { Button, Header } from 'react-native-elements';
+import { Button, Header, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import { DrawerActions } from 'react-navigation';
 import { connect } from 'react-redux';
+import Swipeout from 'react-native-swipeout'
 
 class WishlistScreen extends React.Component {
+
     render() {
 
+        var swipeSettings = [
+            {
+                text: 'Retirer',
+                backgroundColor: '#DD2E44',
+            }
+        ]
 
-       var filmWishlist = this.props.wishlist.map((data, i) => {
-           console.log('ici data =====>>>',data)
-        return (
-            <View style={{flex:1,borderBottomColor: '#fff',
-            borderBottomWidth: 1, marginBottom:15, flexDirection:'row' }} key={i}>
-              
-            <Image  style={styles.WishlistImage} source={{uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path}} />
-            
-                <Text style={{color:'#fff' ,fontSize:14, fontWeight:'600', marginTop:5}}>Note: {data.films.vote_average}</Text>
-                
-                <Text style={{color:'#fff' ,fontSize:14, fontWeight:'600', marginTop:5, width:'50%'}}>Synopsis {data.films.overview.substr(0,120)+"..."}</Text>
-                <Text style={{color:'#fff' ,fontSize:18, fontWeight:'900', marginTop:5}}> {data.films.title}</Text> 
+        var filmWishlist = this.props.wishlist.map((data, i) => {
+            console.log('ici data =====>>>', data)
 
-            </View> 
-        )
+
+
+            return (
+
+                <View key={i} style={styles.Content} >
+                    <Swipeout right={swipeSettings}>
+                        <ListItem
+                            key={i}
+                            containerStyle={{ backgroundColor: '#1C213E' }}
+                            leftElement={
+                                <View>
+                                    <Image style={styles.WishlistImage} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} />
+                                </View>
+                            }
+                            title={
+                                <View>
+                                    <Text style={styles.Titre}>{data.films.title}</Text>
+                                </View>
+                            }
+                            subtitle={
+                                <View>
+                                    <Text style={styles.Synopsis}>{data.films.overview.substr(0, 120) + "..."}</Text>
+                                    <Text style={styles.Note}>Note : {data.films.vote_average}</Text>
+                                </View>
+                            }
+                        />
+                    </Swipeout>
+                </View>
+
+            )
         })
 
         return (
             <View style={styles.container}>
-            <Header  // // // // // // //  Header
+                <Header  // // // // // // //  Header
                     barStyle="light-content"
                     leftComponent={<Icon style={{ marginLeft: 10 }}
                         name='chevron-left'
                         size={25}
                         color='#fff'
                         onPress={() => this.props.navigation.goBack()} />}
-                    centerComponent={{ text: 'Wishlist', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }} 
+                    centerComponent={{ text: 'Wishlist', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                     containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex: 100 }}
                 />
 
-                     
-                       
-                     {filmWishlist}
-                     
+
+                <ScrollView>
+
+                    {filmWishlist}
+
+                </ScrollView>
 
 
-              </View> 
-              
+            </View>
+
 
 
         );
     }
-    }
+}
 
-    function mapStateToProps(state) {
-        console.log('STATATATATATEEEEEEE =====>>>>>',state) 
-        return {wishlist : state.wishlistData}
-       }
+function mapStateToProps(state) {
+    console.log('STATATATATATEEEEEEE =====>>>>>', state)
+    return { wishlist: state.wishlistData }
+}
 
-    export default connect(
-        mapStateToProps, 
-        null
-      )(WishlistScreen);
+export default connect(
+    mapStateToProps,
+    null
+)(WishlistScreen);
 
-    const styles = StyleSheet.create({
-        container:{
+const styles = StyleSheet.create({
+    container: {
         flex: 1,
         backgroundColor: 'rgba(19,23,47,1)',
-        },
+    },
 
-        scroll:{
-            width:'80%'
-            },
+    Content: {
+        flex: 1,
+        marginTop: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        margin: 10,
+    },
 
-        WishlistImage: {
-            
+    Titre: {
+        fontSize: 22,
+        fontWeight: '800',
+        color: '#fff'
+    },
+
+    Synopsis: {
+        marginTop: 10,
+        color: '#f2f2f2',
+        fontSize: 16
+    },
+
+    Note: {
+        marginTop: 5,
+        fontWeight: '600',
+        color: '#E5C92F'
+
+    },
+
+    WishlistImage: {
+
         width: 100,
         height: 150,
-        marginBottom:20,
-        marginRight: 5,
-        marginLeft: 5,
-        },
-        
-    });
+    },
+
+});

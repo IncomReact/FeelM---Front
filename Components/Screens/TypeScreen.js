@@ -21,18 +21,16 @@ class TypeScreen extends React.Component {
       }
 
     navigationAndSelect = (toto) => {
-        console.log('@@@@@@@@@@@@@@@@');
         this.props.onSelectClick(toto)
         this.setState({
             visible: !this.state.visible
         });
         setTimeout(() => {
-            console.log('setInterval ========');
             this.setState({
                 visible: false
             });
             this.props.navigation.navigate('Home')
-        },2500);
+        },2000);
         
 
         
@@ -60,7 +58,7 @@ class TypeScreen extends React.Component {
                         overlayColor="rgba(19,23,47,1)"
                         source={require("./robot.json")}
                         animationStyle={styles.lottie}
-                        speed={1}
+                        speed={1.5}
                     />
                     {/* <Spinner
                         visible={this.state.spinner}

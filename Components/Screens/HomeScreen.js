@@ -27,56 +27,79 @@ class HomeScreen extends Component{
         };
         
     }
-    indexFilms = 0
+    indexFilms = 0;
+    FilmCardFitredData  =[];
     componentWillMount() {
 
         // console.log(this.props.Movies)
 
        
-        this.setState({ status: 'Chargement des films en cours ...', MoviesList: this.props.Movies});
+        //this.setState({ status: 'Chargement des films en cours ...', MoviesList: this.props.Movies});
+       // console.log('willmount=> ',this.props.Movies[0]);
         
     };
+    DetailsSelect = () => {
+
+        // this.setState({
+        //     visible: !this.state.visible
+        // });
+        this.props.onPlayClick(this.FilmCardFitredData[this.indexFilms])
+        // console.log('Noubeau toto ========> ', this.state.MoviesList[0], '@@@@@@@@@@')
+        // console.log('Noubeau toto ========> ', this.FilmCardFitredData[this.indexFilms], '@@@@@@@@@@')
+        this.props.navigation.navigate('Film')
+        // setTimeout(() => {
+        //     this.setState({
+        //         visible: false
+        //     });
+            
+        // }, 1000);
+    }
 
     WishListSelect = () => {
+
         this.setState({
             visible: !this.state.visible
         });
-        this.props.onSelectClick(this.state.MoviesList[this.indexFilms])
-        console.log('Noubeau toto ========> ', this.state.MoviesList[this.indexFilms], '@@@@@@@@@@')
-        
+        this.props.onSelectClick(this.FilmCardFitredData[this.indexFilms])
+        // console.log('Noubeau toto ========> ', this.state.MoviesList[0], '@@@@@@@@@@')
+        // console.log('Noubeau toto ========> ', this.FilmCardFitredData[this.indexFilms], '@@@@@@@@@@')
         
         setTimeout(() => {
             this.setState({
                 visible: false
             });
-            // this.props.navigation.navigate('Wishlist')
+            this.swiper.swipeRight()
         }, 1000);
     }
     render() {
 
-        // console.log('@@@@@@@@@@@@@@@@@@@@@@', this.state.MoviesList, '&&&&&&&&&&&&')
+         //for (let i = 0, max = this.props.Movies.length; i < max; i++) {
+       
+        this.FilmCardFitredData = [];
+        let FilmCardFitred = [];
         
-        
-
-        var filmsCard = this.state.MoviesList.map((data, i) => {
-            
+        for (let i = 0; i < this.props.Movies.length; i++) {    
+            let data = this.props.Movies[i];
             var arr1 = data.films.mood;
             var arr2 = data.films.avec_qui;
             var arr3 = this.props.DataRedux;
             var arr4 = data.films.cat
+
+
             if (arr1[0] === arr3[0]
                 && arr2[0] === arr3[1]
                 && arr4 === arr3[2]) {
-                return (
-                    
+                this.FilmCardFitredData.push({...data});
+                FilmCardFitred.push(
+ 
                     <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
                 )
             }
 
-        
-        })
+            
+        }
 
-        // var FilmCardFitred = filmsCard.filter(item => item)
+        //var FilmCardFitred = filmsCard.filter(item => item)
         // console.log("filmsCard", FilmCardFitred);
 
         // console.log('Films ======== ',FilmCardFitred)
@@ -105,6 +128,19 @@ class HomeScreen extends Component{
                                  />
                         }
                         /> }
+                    rightComponent={<Button containerStyle={styles.ButtonMood}
+                        type="clear"
+                        onPress={() => this.props.navigation.navigate('Mood')}
+                        icon={
+                            <SvgUri
+                                width="25"
+                                height="25"
+                                color='#fff'
+                                source={require('../../assets/reset.svg')}
+                                style={{ marginRight: 10, }}
+                            />
+                        }
+                    />}
                     centerComponent={<Image style={{ width: 110, height: 25,}} source={require('../../assets/logo_feelm.png')}/>}
                     containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex:100 }}
                 />
@@ -147,11 +183,11 @@ class HomeScreen extends Component{
                         
                 >
                         {/* {this.state.MoviesList} */}
-                        {filmsCard}  
+                        {FilmCardFitred}  
                         
                 </CardStack>
-                        <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />
-                      
+                    <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2, }} source={require('../../assets/bg_3.jpg')} /> 
+                  
                 <View style={{alignItems:'center'}}>  
                         
                 <View style={styles.footer}>
@@ -163,7 +199,7 @@ class HomeScreen extends Component{
                                     height="28" />
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.button, styles.orange]}
-                                onPress={() => this.props.navigation.navigate('Film')} >
+                                onPress={this.DetailsSelect} >
                                 <SvgUri source={require('../../assets/play.svg')} width="40"
                                     height="40" style={{ marginLeft: 5, }} />
                             </TouchableOpacity>
@@ -209,7 +245,12 @@ function mapDispatchToProps(dispatch) {
         onSelectClick: function (currentFilm) {
             dispatch({ type: 'wishlistFilm', wishlistFilm : currentFilm }
             )
-            console.log("currentFilm ======>>>",currentFilm)
+            
+        },
+        onPlayClick: function (detailFilm) {
+            dispatch({ type: 'DetailsFilm', DetailsFilmData: detailFilm }
+            )
+            // console.log("detailFilm ======>>>", detailFilm)
         }
     }
 }
