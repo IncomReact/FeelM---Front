@@ -11,113 +11,79 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
-import { DrawerActions } from 'react-navigation';
-import LottieView from 'lottie-react-native';
 import { connect } from 'react-redux';
 import AnimatedLoader from "react-native-animated-loader";
 
 class HomeScreen extends Component{
+
     constructor(props) {
         super(props);
         
         this.state = {
-            movies: [],
+            MoviesList: [],
             status: null,
             // onSelectClick: '',
             visible: false
         };
+        
     }
     indexFilms = 0
     componentWillMount() {
-        this.setState({ status: 'Chargement des films en cours ...' });
+
+        // console.log(this.props.Movies)
+
+       
+        this.setState({ status: 'Chargement des films en cours ...', MoviesList: this.props.Movies});
         
     };
+
     WishListSelect = () => {
         this.setState({
             visible: !this.state.visible
         });
-        this.props.onSelectClick(this.props.Movies[this.indexFilms])
-        console.log('variable toto ========> ', this.props.Movies[this.indexFilms])
-        this.props.navigation.navigate('Home')
+        this.props.onSelectClick(this.state.MoviesList[this.indexFilms])
+        console.log('Noubeau toto ========> ', this.state.MoviesList[this.indexFilms], '@@@@@@@@@@')
+        
         
         setTimeout(() => {
             this.setState({
                 visible: false
             });
+            // this.props.navigation.navigate('Wishlist')
         }, 1000);
     }
     render() {
 
+        // console.log('@@@@@@@@@@@@@@@@@@@@@@', this.state.MoviesList, '&&&&&&&&&&&&')
         
         
 
-        var filmsCard = this.props.Movies.map((data, i) => {
-
+        var filmsCard = this.state.MoviesList.map((data, i) => {
+            
             var arr1 = data.films.mood;
             var arr2 = data.films.avec_qui;
             var arr3 = this.props.DataRedux;
             var arr4 = data.films.cat
-
-            for (let b = 0; b < arr1.length; b++) {
-                console.log(arr1);
-
-                
-            for (let c = 0; c < arr2.length; c++) {
-                console.log(arr2);
-            
-
-            // for (let a = 0; a < arr3.length; a++) {
-              
-
-             
-            // if (arr1[0] === arr3[0] || arr1[1] === arr3[0] || arr1[2] === arr3[0] || arr1[3] === arr3[0] 
-            //     && arr3[1] === arr2[0] || arr3[1] === arr2[1] || arr3[1] === arr2[2] 
-            //     && arr4 === arr3[2]) {
-                if (arr1[0] === arr3[0] 
-                    && arr3[1] === arr2[0]
-                    && arr4 === arr3[2]) {
-                    console.log(arr3[1] === arr2[0]);
-                // if (arr1.indexOf(arr3[0]) && arr2.indexOf(arr3[1]) && arr4 === arr3[2]  ) {
-                //     console.log("Match mood", arr1.indexOf(arr3[0]), "Match avec_qui", arr2.indexOf(arr3[1]), "Match cat",arr4 === arr3[2]);
-                         
-            return (
-                
-                <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
-                
-            )
-            
-                    }
-                }
-                
+            if (arr1[0] === arr3[0]
+                && arr2[0] === arr3[1]
+                && arr4 === arr3[2]) {
+                return (
+                    
+                    <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
+                )
             }
-            
-            // var Categorie = this.props.Movies.map((category, a) => {
-            //     console.log('Catégorie =========', category.films.cat);
-            // })
-            // var Mood = this.props.Movies.map((Mood, b) => {
-            //     console.log('Mood =========', Mood.films.mood);
-            // })
-            // var Avec = this.props.Movies.map((qui, c) => {
-            //     console.log('Avec qui =========', qui.films.avec_qui);
-            // })
-            // var ReduxD = this.props.DataRedux.map((ReduxData, i) => {
-            //     console.log('ReduxData =========', ReduxData);
-            // })
-            // if (arr1[0] === arr3[0] || arr1[1] === arr3[0] || arr1[2] === arr3[0] 
-            //     && arr3[1] === arr2[0] || arr3[1] === arr2[1] || arr3[1] === arr2[2] || arr3[1] === arr2[3]
-            //     && arr4 === arr3[2] ) {
 
-            // if (arr1[0] === arr3[0] || arr1[1] === arr3[0] || arr1[2] === arr3[0]) {
-            //     console.log('OUI');
-            // } else {
-            //     console.log('NON');
-            // }
-            
-            })
-    
         
-        // console.log(filmsCard);
+        })
 
+        // var FilmCardFitred = filmsCard.filter(item => item)
+        // console.log("filmsCard", FilmCardFitred);
+
+        // console.log('Films ======== ',FilmCardFitred)
+        // let jsonFilm = JSON.parse(FilmCardFitred);
+        // console.log("Nombre films avec ceux non matché////////", filmsCard.length)
+        // console.log("Tous les films avec ceux non matché////////", FilmCardFitred)
+        // console.log("Tous les films matché ////////", FilmCardFitred.length)
         // console.log('Films Matché ======= ...', filmsCard.sort(function (a, b) { return 0.5 - Math.random() }));
 
         // 
@@ -180,8 +146,8 @@ class HomeScreen extends Component{
                         onSwipedLeft={(index) => { this.indexFilms = index + 1, console.log(this.indexFilms)}}
                         
                 >
-                        {/* {filmsCard.sort()} */}
-                        {filmsCard.sort(function (a, b) { return 0.5 - Math.random() })}  
+                        {/* {this.state.MoviesList} */}
+                        {filmsCard}  
                         
                 </CardStack>
                         <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />

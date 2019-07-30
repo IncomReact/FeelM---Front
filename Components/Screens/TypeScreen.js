@@ -69,7 +69,8 @@ class TypeScreen extends React.Component {
                         source={require("./dino.json")}
                         animation='slide'
                     /> */}
-                    <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("film")}>
+                    <Button 
                         title="Films"
                         type="clear"
                         icon={
@@ -83,10 +84,11 @@ class TypeScreen extends React.Component {
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
                         onPress={() => this.navigationAndSelect("film")}
                     />
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.Mood}>
-
-                    <Button containerStyle={styles.ButtonMood}
+                <View style={styles.Mood} onPress={() => this.navigationAndSelect("serie")}>
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("serie")}>    
+                    <Button 
                         title="Series"
                         type="clear"
                         icon={
@@ -99,11 +101,11 @@ class TypeScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
                         onPress={() => this.navigationAndSelect("serie")}
-                    />
+                    /></TouchableOpacity>
                 </View>
                 <View style={styles.Mood}>
-
-                    <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("film")}>   
+                    <Button 
                         title="Au cinéma"
                         type="clear"
                         icon={
@@ -117,7 +119,7 @@ class TypeScreen extends React.Component {
                         buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
                         onPress={() => this.navigationAndSelect("film")}
                     />
-
+                     </TouchableOpacity>
                 </View>
 
             </View>

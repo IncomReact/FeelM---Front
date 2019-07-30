@@ -32,7 +32,7 @@ constructor(){
                 visible: false
             });
             this.props.navigation.navigate('Type')
-        }, 500);
+        }, 1500);
     }
 
 
@@ -60,11 +60,11 @@ render() {
                 <AnimatedLoader
                     visible={this.state.visible}
                     overlayColor="rgba(19,23,47,1)"
-                    source={require("./dino.json")}
+                    source={require("./check2.json")}
                     animationStyle={styles.lottie}
                     speed={1}
-                />
-                <Button containerStyle={styles.ButtonMood}
+                /><TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("enfants")}>
+                <Button 
                     title="Mes Enfants"
                     type="clear"
                     icon={
@@ -77,11 +77,11 @@ render() {
                     titleStyle={styles.TitleButton}
                     buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center',}}
                     onPress={() => this.navigationAndSelect("enfants")}
-                />
+                /></TouchableOpacity>
             </View>
             <View style={styles.Mood}>
-                
-                <Button containerStyle={styles.ButtonMood}
+                <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("compagnon")}>
+                <Button 
                     title="En amoureux"
                     type="clear"
                     icon={
@@ -94,10 +94,10 @@ render() {
                     titleStyle={styles.TitleButton}
                     buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
                     onPress={() => this.navigationAndSelect("compagnon")}
-                />
+                /></TouchableOpacity>
             </View>
-            <View style={styles.Mood}>
-                
+            <View style={styles.Mood} onPress={() => this.navigationAndSelect("seul")}>
+                <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("seul")}>
                 <Button containerStyle={styles.ButtonMood}
                     title="Seul"
                     type="clear"
@@ -111,11 +111,11 @@ render() {
                     titleStyle={styles.TitleButton}
                     buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
                     onPress={() => this.navigationAndSelect("seul")}
-                />
+                /></TouchableOpacity>
 
             </View>
             <View style={styles.Mood}>
-                
+                <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("amis")}>
                 <Button containerStyle={styles.ButtonMood}
                     title="Mes amis"
                     type="clear" 
@@ -129,11 +129,10 @@ render() {
                     titleStyle={styles.TitleButton}
                     buttonStyle={{ justifyContent: 'center', flex: 1, }}
                     onPress={() => this.navigationAndSelect("amis")}
-                />
-
+                /></TouchableOpacity>
             </View>
             <View style={styles.Mood}>
-
+                 <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("famille")}>   
                 <Button containerStyle={styles.ButtonMood}
                     title="En Famille"
                     type="clear"
@@ -142,12 +141,11 @@ render() {
                             width="60"
                             height="60"
                             source={require('../../assets/icones/svg/156-woman.svg')}
-                        />
-                    }
+                        />}
                     titleStyle={styles.TitleButton}
                     buttonStyle={{ justifyContent: 'center', flex: 1, }}
                     onPress={() => this.navigationAndSelect("famille")}
-                />
+                /></TouchableOpacity>
 
             </View>
 

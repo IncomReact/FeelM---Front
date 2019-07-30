@@ -24,7 +24,7 @@ export default function ( filterData = [], action) {
     else if (action.type == 'type') {
         copyfilterData.push(action.format)
 
-        console.log('========= copy',copyfilterData)
+        // console.log('========= copy',copyfilterData)
 
         return copyfilterData;
 

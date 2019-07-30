@@ -31,14 +31,12 @@ class MoodScreen extends React.Component {
                 visible: false
             });
             this.props.navigation.navigate('With')
-        }, 500);
+        }, 1500);
     }
-    
-
-
+  
     render() {
         return (
-                 // // // // // View Principale  // // // // // //
+         // // //// // // // //  View Principale  // // // // // // // // // // /
                 <View style={styles.container}> 
                 <Header  // // // // // // //  Header
                     barStyle="light-content"
@@ -59,11 +57,12 @@ class MoodScreen extends React.Component {
                     <AnimatedLoader
                         visible={this.state.visible}
                         overlayColor="rgba(19,23,47,1)"
-                        source={require("./dino.json")}
+                        source={require("./check2.json")}
                         animationStyle={styles.lottie}
                         speed={1}
                     />
-                    <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("heureux")}>
+                    <Button 
                         title="Heureux"
                         type="clear"
                         icon={
@@ -76,8 +75,9 @@ class MoodScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.navigationAndSelect("heureux")}
-                    />
-                    <Button containerStyle={styles.ButtonMood}
+                        /></TouchableOpacity>
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("triste")}>
+                    <Button 
                         title="Triste"
                         type="clear"
                         
@@ -93,10 +93,11 @@ class MoodScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.navigationAndSelect("triste")}
-                    />
+                        /></TouchableOpacity>
                 </View>
                 <View style={styles.Mood}>
-                    <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("second")}>
+                    <Button 
                         title="Etat second"
                         type="clear"
                         icon={
@@ -109,8 +110,9 @@ class MoodScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.navigationAndSelect("second")}
-                    />
-                    <Button containerStyle={styles.ButtonMood}
+                    /></TouchableOpacity>
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("endormir")}>
+                    <Button 
                         title="S’endormir"
                         type="clear"
                         icon={
@@ -123,10 +125,11 @@ class MoodScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.navigationAndSelect("endormir")}
-                    />
+                    /></TouchableOpacity>
                 </View>
                 <View style={styles.Mood}>
-                    <Button containerStyle={styles.ButtonMood}
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("réfléchir")}>
+                    <Button 
                         title="Réfléchir"
                         type="clear"
                         icon={
@@ -139,8 +142,9 @@ class MoodScreen extends React.Component {
                         titleStyle={styles.TitleButton}
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%' }}
                         onPress={() => this.navigationAndSelect("réfléchir")}
-                    />
-                    <Button containerStyle={styles.ButtonMood}
+                    /></TouchableOpacity>
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("surpris")}>
+                    <Button 
                         title="Être surpris"
                         type="clear"
                         icon={
@@ -154,10 +158,11 @@ class MoodScreen extends React.Component {
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%'  }}
 
                         onPress={() => this.navigationAndSelect("surpris")}
-                    />
+                    /></TouchableOpacity>
                     </View>
 
                     <View style={styles.Mood}>
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("tete")}>
                     <Button containerStyle={styles.ButtonMood}
                         title="Pas prise de tête"
                         type="clear"
@@ -172,7 +177,8 @@ class MoodScreen extends React.Component {
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%'  }}
 
                         onPress={() => this.navigationAndSelect("tete")}
-                    />
+                        /></TouchableOpacity>
+                    <TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("evasion")}>
                     <Button containerStyle={styles.ButtonMood}
                         title="Evasion"
                         type="clear"
@@ -187,7 +193,7 @@ class MoodScreen extends React.Component {
                         buttonStyle={{ flexDirection: 'column', flex: 1, width: '100%'  }}
 
                         onPress={() => this.navigationAndSelect("evasion")}
-                    />
+                        /></TouchableOpacity>
                 </View>
                 
                
