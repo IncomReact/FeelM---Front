@@ -12,6 +12,19 @@ import Swipeout from 'react-native-swipeout'
 
 class WishlistScreen extends React.Component {
 
+    // indexFilms = 0;
+    FilmCardFitredData = [];
+
+
+    DetailsSelect = (index) => {
+
+        this.props.onWishlistClick(this.FilmCardFitredData[index])
+        console.log(this.FilmCardFitredData[index])
+
+        this.props.navigation.navigate('Film')
+
+    }
+
     render() {
 
         var swipeSettings = [
@@ -22,7 +35,9 @@ class WishlistScreen extends React.Component {
         ]
 
         var filmWishlist = this.props.wishlist.map((data, i) => {
-            console.log('ici data =====>>>', data)
+            //console.log('ici data =====>>>', data)
+
+            this.FilmCardFitredData.push({ ...data });
 
 
 
@@ -33,6 +48,7 @@ class WishlistScreen extends React.Component {
                         <ListItem
                             key={i}
                             containerStyle={{ backgroundColor: '#1C213E' }}
+                            onPress={() => this.DetailsSelect(i)}
                             leftElement={
                                 <View>
                                     <Image style={styles.WishlistImage} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} />
@@ -55,6 +71,10 @@ class WishlistScreen extends React.Component {
 
             )
         })
+
+
+
+
 
         return (
             <View style={styles.container}>
@@ -86,13 +106,25 @@ class WishlistScreen extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log('STATATATATATEEEEEEE =====>>>>>', state)
-    return { wishlist: state.wishlistData }
+    //console.log('STATATATATATEEEEEEE =====>>>>>', state)
+    return { wishlist: state.wishlistData, Movies: state.filmData }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+
+        onWishlistClick: function (detailFilm) {
+            console.log("detailFilm ======>>>", detailFilm)
+            dispatch({ type: 'DetailsFilm', DetailsFilmData: detailFilm }
+            )
+
+        }
+    }
 }
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps,
 )(WishlistScreen);
 
 const styles = StyleSheet.create({

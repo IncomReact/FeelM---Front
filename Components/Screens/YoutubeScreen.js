@@ -2,11 +2,15 @@ import React, { Component } from 'react'
 import { WebView, View } from 'react-native'
 import { Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
-export default class YoutubeScreen extends Component {
-
+class YoutubeScreen extends Component {
+    
     render() {
-
+        var idMovie = this.props.LinkTeaser.films.id;
+        console.log(idMovie);
+        var MovieName = this.props.LinkTeaser.films.title
+        console.log(MovieName)
         return (
             <View style={{ flex: 1 }}>
                 <Header
@@ -16,16 +20,25 @@ export default class YoutubeScreen extends Component {
                         size={25}
                         color='#fff'
                         onPress={() => this.props.navigation.goBack()} />}
-                    centerComponent={{ text: 'Retour', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                    centerComponent={{ text: MovieName, style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                     containerStyle={{ backgroundColor: '#13172F', justifyContent: 'space-around', borderBottomColor: '#13172F' }}
                 />
                 <WebView
                     style={{ flex: 1 }}
                     javaScriptEnabled={true}
-                    source={{ uri: 'https://www.youtube.com/embed/EsaX5kltRcA?rel=0&autoplay=0&showinfo=0&controls=0' }}
+                    source={{
+                        uri: 'https://www.themoviedb.org/movie/' + idMovie + '-' + MovieName + '/videos?active_nav_item=Trailers&language=fr-FR' }}
                 />
             </View>
         )
     }
 }
+function mapStateToProps(state) {
+    // console.log('State =====',state)
+    return { LinkTeaser: state.Teaser };
+}
 
+export default connect(
+    mapStateToProps,
+    null,
+)(YoutubeScreen);

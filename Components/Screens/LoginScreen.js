@@ -8,6 +8,7 @@ import { AuthSession } from 'expo';
 import { SocialIcon, Avatar, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 class LoginScreen extends React.Component {
+    
     componentDidMount = () => {
 
         AsyncStorage.getItem("user", (error, data) => {
@@ -50,7 +51,7 @@ class LoginScreen extends React.Component {
     render() {
         
         return (
-            <ImageBackground source={require('../../assets/bg_3.jpg')} style={{ width: '100%', height: '100%' }}>
+            <ImageBackground source={require('../../assets/bg_log.jpg')} style={{ width: '100%', height: '100%' }}>
                 { (this.props.user) ? 
                 <View style={styles.container}>
                     <Avatar

@@ -56,7 +56,7 @@ class MoodScreen extends React.Component {
                     <AnimatedLoader
                         visible={this.state.visible}
                         overlayColor="rgba(19,23,47,1)"
-                        source={require("./check2.json")}
+                        source={require("../../assets/animations/check2.json")}
                         animationStyle={styles.lottie}
                         speed={1.5}
                     />
@@ -169,7 +169,7 @@ class MoodScreen extends React.Component {
                             <SvgUri
                                 width="70"
                                 height="70"
-                                source={require('../../assets/icones/svg/016-shocked.svg')}
+                                source={require('../../assets/icones/svg/017-shut.svg')}
                             />
                         }
                         titleStyle={styles.TitleButton}
@@ -185,7 +185,7 @@ class MoodScreen extends React.Component {
                             <SvgUri
                                 width="70"
                                 height="70"
-                                source={require('../../assets/icones/svg/016-shocked.svg')}
+                                source={require('../../assets/icones/svg/090-pirate.svg')}
                             />
                         }
                         titleStyle={styles.TitleButton}

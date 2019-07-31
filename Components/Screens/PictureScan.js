@@ -31,133 +31,57 @@ class PictureScan extends Component{
             surpris: '',
         }
     }
+    
     componentWillMount() {
-        fetch('https://feelmapp.herokuapp.com/library')
-            .then((response) => {
-                return response.json();
-            })
-            .then((picture) => {
-                console.log('======== picture =======', picture.user.pictures.length);
-                console.log('USERCOPY -----', picture)
-                var userCopy = [];
-                for (let i = 0; i < picture.user.pictures.length; i++) {
-                    userCopy.push({
-                        picture: picture.user.pictures[i].pictureUrl,
-                        gender: picture.user.pictures[i].gender, 
-                        age: picture.user.pictures[i].age,
-                    })
-                    this.setState({ picture: userCopy});
-                }
+        if (this.props.azureData.emotion.happiness > 0.3) {
+            console.log('Condition heureux ===', this.props.azureData.emotion.happiness > 0.2)
+            this.props.onMoodCheck("heureux")
+        } else if (this.props.azureData.emotion.sadness > 0.2) {
+            console.log('Condition triste ===', this.props.azureData.emotion.sadness > 0.2)
+            this.props.onMoodCheck("triste")
+        } else if (this.props.azureData.emotion.surprise > 0.2) {
+            console.log('Condition surpris ===', this.props.azureData.emotion.surprise > 0.2)
+            this.props.onMoodCheck("surpris")
+        } else if (this.props.azureData.emotion.neutral > 0.2) {
+            console.log('Condition tete ===', this.props.azureData.emotion.neutral > 0.2)
+            this.props.onMoodCheck("tete") 
+        } else if (this.props.azureData.emotion.disgust > 0.2) {
+            console.log('Condition second ===', this.props.azureData.emotion.disgust > 0.2)
+            this.props.onMoodCheck("second")
+        }
 
-                console.log('USERCOPY -----', userCopy)
-            })
+        this.setState({
+            visible: true
+        });
+        setTimeout(() => {
+            this.setState({
+                visible: false
+            });
+            this.props.navigation.navigate('HomeScan') 
+        } ,3000);
+        
     }
    
     render() {
+        
 
         return (
             <View style={styles.container}>
                 
-                <Header  // // // // // // // // // // // // // //   Header  // // // // // // //  // // // // // // // 
-                    barStyle="light-content"
-                    leftComponent={<Button containerStyle={styles.ButtonMood}
-                        type="clear"
-                        onPress={() => { this.props.navigation.toggleDrawer() }}
-                        icon={
-                            <SvgUri
-                                width="30"
-                                height="30"
-                                color='#fff'
-                                source={require('../../assets/icones/svg/menu.svg')}
-                                style={{ marginLeft: 15, }}
-                                 />
-                        }
-                        /> }
-                    centerComponent={<Image style={{ width: 110, height: 25,}} source={require('../../assets/logo_feelm.png')}/>}
-                    containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex:100 }}
-                />
+                
                 <AnimatedLoader
                     visible={this.state.visible}
-                    overlayColor="rgba(19,23,47,0.9)"
-                    source={require("./star.json")}
+                    overlayColor="rgba(19,23,47,0.3)"
+                    source={require("../../assets/animations/scan.json")}
                     animationStyle={styles.lottie}
                     speed={1}
                 />
-                <View style={{marginTop:100}}>
-                    
-                    <LinearGradient
-                        colors={['rgba(19,23,47,0)', 'rgba(19,23,47,1)', 'rgba(19,23,47,1)',]}
-                        style={{
-                            position: 'absolute',
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            height: '100%',
-                        }}
-                    />
+           
+      
+                {/* <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} /> */}
+                    <Image style={{ width: '100%', height: '100%',  }} source={{ uri: this.props.Photo.secure_url }} />
 
-                <CardStack
-                    style={styles.content}
-                    renderNoMoreCards={() => 
-                        <View>
-                            <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :( </Text>
-                            
-                        </View>
-                    }  
-                    ref={swiper => {
-                        this.swiper = swiper
-                    }}
-                        disableBottomSwipe={true}
-                        disableTopSwipe={true}
-                        onSwipedRight={(index) => this.indexFilms = index + 1}
-                        onSwipedLeft={(index) => this.indexFilms = index + 1}
-                >
-                        {filmsCard}
-
-                </CardStack>
-                        <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2,  }} source={require('../../assets/fil_BG.jpg')} />
-                      
-                <View style={{alignItems:'center'}}>  
-                        
-                <View style={styles.footer}>
-                            
-                            <TouchableOpacity style={[styles.button, styles.red]} onPress={() => {
-                                this.swiper.swipeLeft();
-                            }}>
-                                <SvgUri source={require('../../assets/close.svg')} width="28"
-                                    height="28" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button, styles.orange]}
-                                onPress={() => this.props.navigation.navigate('Film')} >
-                                <SvgUri source={require('../../assets/play.svg')} width="40"
-                                    height="40" style={{ marginLeft: 5, }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button, styles.green]} onPress={() => {
-                                this.swiper.swipeRight();
-                            }}>
-                                <SvgUri source={require('../../assets/check-mark.svg')} width="28"
-                                    height="28" />
-                            </TouchableOpacity>
-
-
-               </View>
-               <View style={styles.footer2}>
-                             
-                        <TouchableOpacity style={[styles.button, styles.blue]} onPress={() => {
-                            this.swiper.goBackFromLeft();
-                        }}>
-                            <SvgUri source={require('../../assets/icones/svg/go-back.svg')} width="28"
-                                height="28" />
-                        </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={1} style={[styles.button, styles.yellow]} onPress={this.wishlistSelect}>
-                            <SvgUri source={require('../../assets/icones/svg/fav.svg')} width="28"
-                                height="28" />
-                        </TouchableOpacity>
-                </View> 
-             </View>   
-                           
-                </View>
-               
+                   
                 </View>
                         
             
@@ -167,31 +91,36 @@ class PictureScan extends Component{
 
 
 function mapStateToProps(state) {
-    console.log('!!!!!!!!!!!!!!!!!!!!',state)
-    return { Movies: state.filmData, filterData: state.filterData };
+    console.log('cloudinary State !!!!!!!!!!!!!!!!!!!!',state)
+    return { Photo: state.cloudinary, DataRedux: state.filterData, azureData: state.Azure };
 }
+
 function mapDispatchToProps(dispatch) {
     return {
-        onSelectClick: function (currentFilm) {
-            dispatch({ type: 'wishlistFilm', wishlistFilm: currentFilm }
+        onMoodCheck: function (moodState) {
+            dispatch({ type: 'mood', mood : moodState, clear: true }
             )
-            // console.log("currentFilm ======>>>",currentFilm)
-        }
+
+        },
+
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PictureScan);
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#13172F'
+        backgroundColor: '#13172F',
+        justifyContent: 'center',
+        alignItems:'center'
     },
-    lottie: {
-        width: 300,
-        height: 300,
-        zIndex: -100,
-    },
+    // lottie: {
+    //     width: 500,
+    //     height: 300,
+    // },
     Mood: {
         flexDirection: 'row',
         justifyContent: 'center',

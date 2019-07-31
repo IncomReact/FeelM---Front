@@ -56,7 +56,7 @@ class TypeScreen extends React.Component {
                     <AnimatedLoader
                         visible={this.state.visible}
                         overlayColor="rgba(19,23,47,1)"
-                        source={require("./robot.json")}
+                        source={require("../../assets/animations/robot.json")}
                         animationStyle={styles.lottie}
                         speed={1.5}
                     />

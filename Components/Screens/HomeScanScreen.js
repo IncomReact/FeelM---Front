@@ -4,7 +4,7 @@ import {
     Text,
     View,
     TouchableOpacity,
-    Image, Animated, ImageBackground
+    Image, Animated, ActivityIndicator
 } from 'react-native';
 import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,6 +22,7 @@ class HomeScreen extends Component{
         this.state = {
             MoviesList: [],
             status: null,
+            // onSelectClick: '',
             visible: false
         };
         
@@ -30,15 +31,28 @@ class HomeScreen extends Component{
     FilmCardFitredData  =[];
     componentWillMount() {
 
-        this.setState({ status: 'Chargement des films en cours ...'});
-      
+        // console.log(this.props.Movies)
+
+       
+        //this.setState({ status: 'Chargement des films en cours ...', MoviesList: this.props.Movies});
+       // console.log('willmount=> ',this.props.Movies[0]);
         
     };
     DetailsSelect = () => {
 
+        // this.setState({
+        //     visible: !this.state.visible
+        // });
         this.props.onPlayClick(this.FilmCardFitredData[this.indexFilms])
+        // console.log('Noubeau toto ========> ', this.state.MoviesList[0], '@@@@@@@@@@')
+        // console.log('Noubeau toto ========> ', this.FilmCardFitredData[this.indexFilms], '@@@@@@@@@@')
         this.props.navigation.navigate('Film')
-       
+        // setTimeout(() => {
+        //     this.setState({
+        //         visible: false
+        //     });
+            
+        // }, 1000);
     }
 
     WishListSelect = () => {
@@ -47,7 +61,8 @@ class HomeScreen extends Component{
             visible: !this.state.visible
         });
         this.props.onSelectClick(this.FilmCardFitredData[this.indexFilms])
-       
+        // console.log('Noubeau toto ========> ', this.state.MoviesList[0], '@@@@@@@@@@')
+        // console.log('Noubeau toto ========> ', this.FilmCardFitredData[this.indexFilms], '@@@@@@@@@@')
         
         setTimeout(() => {
             this.setState({
@@ -63,17 +78,17 @@ class HomeScreen extends Component{
         this.FilmCardFitredData = [];
         let FilmCardFitred = [];
         
-        for (let i = 0; i < this.props.Movies.length; i++) {    
+        for (let i = 0; i < this.props.Movies.length; i++) { 
+
             let data = this.props.Movies[i];
             var arr1 = data.films.mood;
             var arr2 = data.films.avec_qui;
             var arr3 = this.props.DataRedux;
-            var arr4 = data.films.cat
+            
 
-
-            if (arr1.includes(arr3[0]) && arr2.includes(arr3[1]) &&  arr4 === arr3[2]
+            if (arr1.includes(arr3[0])
                 ) {
-                console.log(arr1.includes(arr3[0]) && arr2.includes(arr3[1]) && arr4 === arr3[2]);
+                // console.log(arr1.includes(arr3[0]) );
                 this.FilmCardFitredData.push({...data});
                 FilmCardFitred.push(
  
@@ -84,11 +99,31 @@ class HomeScreen extends Component{
             
         }
 
-    
+        // if (arr1[0] === arr3[0]
+        //     && arr2[0] === arr3[1]
+        //     && arr4 === arr3[2]
+        //     || arr1[1] === arr3[0]
+        //     && arr2[1] === arr3[1]
+        //     && arr4 === arr3[2]
+        //     || arr1[2] === arr3[0]
+        //     && arr2[2] === arr3[1]
+        //     && arr4 === arr3[2]) {
+        
+        //var FilmCardFitred = filmsCard.filter(item => item)
+        // console.log("filmsCard", FilmCardFitred);
+
+        // console.log('Films ======== ',FilmCardFitred)
+        // let jsonFilm = JSON.parse(FilmCardFitred);
+        // console.log("Nombre films avec ceux non matché////////", filmsCard.length)
+        // console.log("Tous les films avec ceux non matché////////", FilmCardFitred)
+        // console.log("Tous les films matché ////////", FilmCardFitred.length)
+        // console.log('Films Matché ======= ...', filmsCard.sort(function (a, b) { return 0.5 - Math.random() }));
+
+        // 
         return (
-            <ImageBackground style={styles.container} source={require('../../assets/bg_3.jpg')}>
-               
-                    <Header 
+            <View style={styles.container}>
+                
+                <Header  // // // // // // // // // // // // // //   Header  // // // // // // //  // // // // // // // 
                     barStyle="light-content"
                     leftComponent={<Button containerStyle={styles.ButtonMood}
                         type="clear"
@@ -99,7 +134,7 @@ class HomeScreen extends Component{
                                 height="30"
                                 color='#fff'
                                 source={require('../../assets/icones/svg/menu.svg')}
-                                style={{ marginLeft: 15, marginBottom : 10 }}
+                                style={{ marginLeft: 15, }}
                                  />
                         }
                         /> }
@@ -119,7 +154,6 @@ class HomeScreen extends Component{
                     centerComponent={<Image style={{ width: 110, height: 25,}} source={require('../../assets/logo_feelm.png')}/>}
                     containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex:100 }}
                 />
-               
                 <AnimatedLoader
                     visible={this.state.visible}
                     overlayColor="rgba(19,23,47,0.9)"
@@ -127,28 +161,44 @@ class HomeScreen extends Component{
                     animationStyle={styles.lottie}
                     speed={1}
                 />
-                <View style={styles.containerCard}>
+                <View style={{marginTop:100}}>
+                    
+                    <LinearGradient
+                        colors={['rgba(19,23,47,0)', 'rgba(19,23,47,1)', 'rgba(19,23,47,1)',]}
+                        style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            height: '100%',
+                        }}
+                    />
+
                 <CardStack
                     style={styles.content}
-                    renderNoMoreCards={() =>
-                            <Image style={styles.cardt} source={require('../../assets/oops.png')} />   
-                    }
+                    renderNoMoreCards={() => 
+                        <View>
+                            <Text style={{ fontWeight: '700', fontSize: 18, color: 'gray' }}>Aucun film à proposer :( </Text>
+                            
+                        </View>
+                    }  
                     ref={swiper => {
                         this.swiper = swiper
-
+                        
                     }}
-                    disableBottomSwipe={true}
-                    disableTopSwipe={true}
-                    onSwipedRight={(index) => { this.indexFilms = index + 1, console.log(this.indexFilms) }}
-                    onSwipedLeft={(index) => { this.indexFilms = index + 1, console.log(this.indexFilms) }}
-
+                        disableBottomSwipe={true}
+                        disableTopSwipe={true}
+                        onSwipedRight={(index) => { this.indexFilms = index + 1, console.log(this.indexFilms) }}
+                        onSwipedLeft={(index) => { this.indexFilms = index + 1, console.log(this.indexFilms)}}
+                        
                 >
-                    {FilmCardFitred}
-
+                        {/* {this.state.MoviesList} */}
+                        {FilmCardFitred}  
+                        
                 </CardStack>
-                    {/* <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, }}  />  */}
+                    <Image style={{ width: '100%', height: '100%', marginTop: -200, zIndex: -100, opacity: 0.2, }} source={require('../../assets/bg_3.jpg')} /> 
                   
-                
+                <View style={{alignItems:'center'}}>  
                         
                 <View style={styles.footer}>
                             
@@ -175,7 +225,7 @@ class HomeScreen extends Component{
                <View style={styles.footer2}>
                              
                         <TouchableOpacity style={[styles.button, styles.blue]} onPress={() => {
-                                this.swiper.goBackFromLeft((index) => { this.indexFilms = index - 1, console.log(this.indexFilms) });
+                            this.swiper.goBackFromLeft();
                         }}>
                             <SvgUri source={require('../../assets/icones/svg/go-back.svg')} width="28"
                                 height="28" />
@@ -185,10 +235,11 @@ class HomeScreen extends Component{
                                 height="28" />
                         </TouchableOpacity>
                 </View> 
-                
-                </View>         
+             </View>   
+                           
+                </View>
                
-            </ImageBackground>
+                </View>
                         
             
         );
@@ -197,7 +248,9 @@ class HomeScreen extends Component{
 
 
 function mapStateToProps(state) {
-    return { Movies: state.filmData, DataRedux: state.filterData };
+    console.log('==== State Azure', state.Azure)
+    console.log('==== DataRedux', state.filterData)
+    return { Movies: state.filmData, DataRedux: state.filterData, azureData: state.Azure };
 }
 function mapDispatchToProps(dispatch) {
     return {
@@ -211,6 +264,7 @@ function mapDispatchToProps(dispatch) {
             )
             // console.log("detailFilm ======>>>", detailFilm)
         }
+        
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
@@ -219,15 +273,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems:'center',
-        justifyContent: 'center',
         backgroundColor: '#13172F'
-    },
-    containerCard: {
-        flex: 1,
-        marginTop:90,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     lottie: {
         width: 300,
@@ -249,26 +295,12 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
     content: {
-
         alignItems: 'center',
-        justifyContent:'flex-end'
     },
     card: {
+       marginTop:-20,
         width: 300,
-        height: 420,
-        borderRadius: 10,
-        shadowColor: 'rgba(19,23,47,1)',
-        shadowOffset: {
-            width: 5,
-            height: 10
-        },
-        shadowOpacity: 1,
-    },
-    cardt: {
-        marginTop: -30,
-        marginBottom:50,
-        width: 250,
-        height: 200,
+        height: 470,
         borderRadius: 10,
         shadowColor: 'rgba(19,23,47,1)',
         shadowOffset: {
@@ -285,16 +317,18 @@ const styles = StyleSheet.create({
     },
     
     footer: {
-        marginTop: 20,
+        marginTop: -20,
         width: 220,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        zIndex: 10000
     },
     footer2: {
-        marginTop: 20,
+        marginTop: 10,
         alignItems: 'center',
         flexDirection: 'row',
+        zIndex: 10000
     },
     buttonContainer: {
         width: 220,
@@ -312,6 +346,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        zIndex: 0,
     },
     orange: {
         width: 80,

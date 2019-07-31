@@ -17,6 +17,15 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 import Moment from 'moment';
 class FilmScreen extends Component {
 
+    TeaserClick = (dataTeaser) => {
+        console.log("dataTeaser", dataTeaser)
+        this.props.onTeaserClick(dataTeaser)
+        // this.props.onBoxofficeClick(this.props.Movies[index])
+        // console.log(this.FilmCardFitredData[index])
+        this.props.navigation.navigate('Youtube')
+
+    }
+
     render() {
 
 
@@ -37,8 +46,8 @@ class FilmScreen extends Component {
                     <Tile
                         imageSrc={{ uri: 'https://image.tmdb.org/t/p/w500' + this.props.Detail.films.poster_path }}
                         icon={{ name: 'play-circle', type: 'font-awesome', color: '#fff', size: 50, marginTop: 30 }}
-                        featuredxz
-                        onPress={() => this.props.navigation.navigate('Youtube')}
+                        featured
+                        onPress={() => this.TeaserClick(this.props.Detail)}
 
                     />
 
@@ -46,10 +55,13 @@ class FilmScreen extends Component {
 
             
                 <View style={styles.container2}>
+                    <TouchableOpacity onPress={() => this.TeaserClick(this.props.Detail)}> 
                     <Image
                         source={{ uri: 'https://image.tmdb.org/t/p/w500' + this.props.Detail.films.poster_path}}
                         style={styles.vignette}
+                        
                     />
+                    </TouchableOpacity>
                     <View>
                         <Text style={styles.h1}>
                             {this.props.Detail.films.title}
@@ -138,10 +150,22 @@ class FilmScreen extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log('State =====',state)
+    // console.log('State =====',state)
     return { Detail: state.DetailsFilmData};
 }
-export default connect(mapStateToProps, null)(FilmScreen);
+
+function mapDispatchToProps(dispatch) {
+    return {
+
+        onTeaserClick: function (TeaserData) {
+            // console.log("Data Teaser ======>>>", TeaserData)
+            dispatch({ type: 'Teaser', teaser: TeaserData }
+            )
+
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FilmScreen);
 
 const styles = StyleSheet.create({
     container: {

@@ -1,5 +1,5 @@
 export default function ( filterData = [], action) {
-
+    // console.log('==== Action Filter', action)
     var copyfilterData
     
    if (action.clear === true) {
@@ -12,7 +12,7 @@ export default function ( filterData = [], action) {
 
         copyfilterData.push(action.mood)
 
-        console.log('========= mood',copyfilterData)
+        // console.log('========= mood',copyfilterData)
 
         return copyfilterData;
     }
@@ -20,7 +20,7 @@ export default function ( filterData = [], action) {
     else if (action.type == 'with') {
         copyfilterData.push(action.with)
 
-        console.log('========= Avec',copyfilterData)
+        // console.log('========= Avec',copyfilterData)
 
         return copyfilterData;
 
@@ -29,7 +29,7 @@ export default function ( filterData = [], action) {
     else if (action.type == 'type') {
         copyfilterData.push(action.format)
 
-        console.log('========= Type',copyfilterData)
+        // console.log('========= Type',copyfilterData)
 
         return copyfilterData;
 

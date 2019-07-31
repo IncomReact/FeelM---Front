@@ -23,11 +23,13 @@ import LinkBuyScreen from '../Screens/LinkBuyScreen';
 import LinkStreamScreen from '../Screens/LinkStreamScreen';
 import VodWebviewScreen from '../Screens/LinkVodWebviewScreen';
 import YoutubeScreen from '../Screens/YoutubeScreen';
-import ChartScreen from '../Screens/ChartScreen'
+import ChartScreen from '../Screens/ChartScreen';
+import ScanPicture from '../Screens/PictureScan';
+import HomeScanScreen from '../Screens/HomeScanScreen'
 const navigator = createDrawerNavigator(
     {
         Home: HomeScreen,
-        
+        HomeScan: HomeScanScreen,
     },
     {
         drawerType: 'back',
@@ -107,7 +109,7 @@ var StackNavigator = createStackNavigator({
     Webview: VodWebviewScreen,
     Youtube: YoutubeScreen,
     Chart: ChartScreen,
-
+    Scan: ScanPicture,
     
     navigator : navigator
 }, { headerMode: 'none' })

@@ -14,6 +14,19 @@ import Moment from 'moment';
 
 
 class NowFilmScreen extends React.Component {
+
+
+    FilmCardFitredData = [];
+
+
+    DetailsSelect = (index) => {
+        console.log("index", index)
+        this.props.onBoxofficeClick(this.props.Movies[index])
+        // console.log(this.FilmCardFitredData[index])
+        this.props.navigation.navigate('Film')
+
+    }
+
     render() {
 
         var today = new Date();
@@ -21,37 +34,41 @@ class NowFilmScreen extends React.Component {
         var moisEnCours = (today.getMonth() + 1);
         // console.log('DATE DU JOUR ----->',today.getFullYear()+'-'+(today.getMonth()+1))
 
-        var nowFilms = this.props.nowFilms.map((data, i) => {
+        this.FilmCardFitredData = [];
+        let FilmCardFitred = [];
 
+        for (let i = 0; i < this.props.Movies.length; i++) {
+            let data = this.props.Movies[i];
             var date = new Date(data.films.release_date);
             // var filtreAnnee = new Date('July 20, 10 00:20:18')
             var anneeSortie = date.getFullYear()
             var moisSortie = date.getMonth()
-            
+
 
             // console.log('FILTRE ----->',data.films.title,anneeSortie,moisSortie)
             // var dateSortie = Moment(data.films.release_date).format('DD-MM-YYYY')
 
             if (data.films.cat == "cinema" && anneeSortie == anneeEnCours && moisSortie > moisEnCours - 4) {
-
-                console.log(data.films.cat == "cinema" && anneeSortie == anneeEnCours && moisSortie > moisEnCours - 4)
-
-                return (
+                console.log("i", i)
+                // console.log(data.films.cat == "cinema" && anneeSortie == anneeEnCours && moisSortie > moisEnCours - 4)
+                this.FilmCardFitredData.push({ ...data });
+                FilmCardFitred.push(
                     <View key={i}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
-                            <Image
+                        <TouchableOpacity onPress={() => this.DetailsSelect(i)} >
+                            <Image onPress={() => this.DetailsSelect(i)}
                                 style={styles.image}
                                 source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
                             />
                         </TouchableOpacity>
 
                     </View>
-
                 )
+
             }
 
 
-        })
+        }
+
 
         return (
             <View style={styles.container}>
@@ -72,7 +89,7 @@ class NowFilmScreen extends React.Component {
 
 
                     <View style={styles.content}>
-                        {nowFilms}
+                        {FilmCardFitred}
                     </View>
 
 
@@ -90,12 +107,24 @@ class NowFilmScreen extends React.Component {
 
 
 function mapStateToProps(state) {
-    return { nowFilms: state.filmData }
+    return { Movies: state.filmData }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+
+        onBoxofficeClick: function (detailFilm) {
+            console.log("detailFilm ======>>>", detailFilm)
+            dispatch({ type: 'DetailsFilm', DetailsFilmData: detailFilm }
+            )
+
+        }
+    }
 }
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps,
 )(NowFilmScreen);
 
 const styles = StyleSheet.create({

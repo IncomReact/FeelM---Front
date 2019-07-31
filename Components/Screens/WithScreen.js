@@ -59,7 +59,7 @@ render() {
                 <AnimatedLoader
                     visible={this.state.visible}
                     overlayColor="rgba(19,23,47,1)"
-                    source={require("./check2.json")}
+                    source={require("../../assets/animations/check2.json")}
                     animationStyle={styles.lottie}
                     speed={1.5}
                 /><TouchableOpacity style={styles.ButtonMood} onPress={() => this.navigationAndSelect("enfants")}>
@@ -74,7 +74,7 @@ render() {
                         />
                     }
                     titleStyle={styles.TitleButton}
-                    buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center',}}
+                    buttonStyle={{ justifyContent: 'center', flex: 1, }}
                     onPress={() => this.navigationAndSelect("enfants")}
                 /></TouchableOpacity>
             </View>
@@ -91,7 +91,7 @@ render() {
                         />
                     }
                     titleStyle={styles.TitleButton}
-                    buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
+                    buttonStyle={{ justifyContent: 'center', flex: 1,  }}
                     onPress={() => this.navigationAndSelect("compagnon")}
                 /></TouchableOpacity>
             </View>
@@ -108,7 +108,7 @@ render() {
                         />
                     }
                     titleStyle={styles.TitleButton}
-                    buttonStyle={{ justifyContent: 'center', flex: 1, alignItems: 'center', }}
+                    buttonStyle={{ justifyContent: 'center', flex: 1, }}
                     onPress={() => this.navigationAndSelect("seul")}
                 /></TouchableOpacity>
 

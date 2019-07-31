@@ -9,8 +9,8 @@ import SvgUri from 'react-native-svg-uri';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import AnimatedLoader from "react-native-animated-loader";
-
-export default class TypeScreen extends React.Component {
+import { connect } from 'react-redux';
+class FaceFeelM extends React.Component {
     state = {
         permision: null,
         type: Camera.Constants.Type.back,
@@ -27,32 +27,46 @@ export default class TypeScreen extends React.Component {
     }
 
     onPictureSaved = async photo => {
-        // this.setState({
-        //     visible: !this.state.visible
-        // });
-        // setTimeout(() => {
-        //     this.setState({
-        //         visible: false
-        //     });
-        //     this.props.navigation.navigate('Home')
-        // }, 4000);
-        console.log(photo.uri);
+        this.setState({
+            visible: !this.state.visible
+        });
+        
+        // console.log(photo.uri);
 
-        console.log(photo.width);
-        console.log(photo.height);
+        // console.log(photo.width);
+        // console.log(photo.height);
 
         var data = new FormData();
 
         data.append('picture', {
             uri: photo.uri,
             type: 'image/jpeg',
-            name: 'user_picture.jpg',
+            name: 'avatar.jpg',
         });
 
         fetch("https://feelmapp.herokuapp.com/upload", {
             method: 'post',
             body: data
-        })
+        }).then(response => {
+            
+            return response.json();
+            
+        }).then(pictureSave => {
+            setTimeout(() => {
+                this.setState({
+                    visible: false
+                });
+                this.props.navigation.navigate('Scan')
+            });
+            // console.log('Données total =======',pictureSave)
+            // console.log('Microsoft Azure =======', pictureSave.jsonResponse[0].faceAttributes)
+            // console.log('Cloudinary =======', pictureSave.result)
+            this.props.OnAzure(pictureSave.jsonResponse[0].faceAttributes)
+            this.props.OnCloud(pictureSave.result)
+            
+        }).catch(err => {
+            console.log(err);
+        });
 
         
 
@@ -72,7 +86,7 @@ export default class TypeScreen extends React.Component {
                 <Camera
                     ref={ref => { this.camera = ref }}
                     style={{ flex: 1, }} type={this.state.type}
-                >
+                >   
                     <Header barStyle="light-content"
                         leftComponent={<Icon style={{ marginLeft: 10 }}
                             name='times'
@@ -87,14 +101,17 @@ export default class TypeScreen extends React.Component {
                             onPress={() => this.props.navigation.goBack()} />}
                         containerStyle={{ backgroundColor: 'rgba(0, 0,0, 0)', justifyContent: 'space-around', borderBottomColor: 'rgba(0, 0,0, 0)' }}
                     />
-                    <View style={styles.inputContainer}>
+                    <View style={styles.lottie}>
                         <AnimatedLoader
                             visible={this.state.visible}
-                            overlayColor="rgba(19,23,47,0.5)"
-                            source={require("./scan.json")}
+                            overlayColor="rgba(19,23,47,0.9)"
+                            source={require("../../assets/animations/animation-w128-h128.json")}
                             animationStyle={styles.lottie}
                             speed={1}
                         />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        
                         <TouchableOpacity style={[styles.Close, styles.red]} onPress={() => this.props.navigation.goBack()} >
                             <SvgUri source={require('../../assets/close.svg')} width="28"
                                 height="28" />
@@ -115,7 +132,7 @@ export default class TypeScreen extends React.Component {
                                 if (this.camera) {
                                     this.camera.takePictureAsync({
                                         onPictureSaved: this.onPictureSaved,
-                                        quality: 0.5,
+                                        quality: 0.4,
                                         base64: true,
                                         exif: true
                                     });
@@ -150,7 +167,21 @@ export default class TypeScreen extends React.Component {
         );
     }
 }
+function mapDispatchToProps(dispatch) {
+    return {
+        OnAzure: function (azureData) {
+            dispatch({ type: 'azure', azureData }
+            )
 
+        },
+        OnCloud: function (cloudinaryData) {
+            dispatch({ type: 'cloud', cloudinaryData }
+            )
+            // console.log("detailFilm ======>>>", detailFilm)
+        }
+    }
+}
+export default connect(null, mapDispatchToProps)(FaceFeelM);
 const styles = StyleSheet.create({
     inputContainer: {
         flex: 1,
@@ -165,6 +196,12 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         borderBottomColor: '#000',
     },
+    lottie: {
+        width: 200,
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     type: {
         flex: 1,
         width: '100%',
@@ -173,11 +210,8 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-
     },
-    lottie: {
-        flex: 1,
-    },
+    
     BackCamera: {
         width: '20%', marginBottom: 80,
         height: 80,

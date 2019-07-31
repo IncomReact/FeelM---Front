@@ -2,13 +2,18 @@ import React from 'react';
 import {
     View,
     ImageBackground,
-    StyleSheet, TouchableOpacity
+    StyleSheet, TouchableOpacity, AsyncStorage
 } from 'react-native';
-import { Button, AsyncStorage, Avatar, Text } from 'react-native-elements';
+import { Button,  Avatar, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import { connect } from 'react-redux';
 class DrawerScreen extends React.Component {
+    OnClear = async () => {
+      AsyncStorage.clear()
+        this.props.navigation.navigate('Login')
+    }
+    
    
     render() {
         return (
@@ -188,7 +193,7 @@ class DrawerScreen extends React.Component {
                         }
                         titleStyle={styles.Logout}
                         buttonStyle={{ flexDirection: 'row', flex: 1, width: '100%', alignItems:'center', justifyContent:'flex-start' }}
-                        // onPress={() => this.props.navigation.navigate('Login')}
+                        onPress={this.OnClear}
                         
                 />
                 </View>
