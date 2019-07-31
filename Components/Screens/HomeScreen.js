@@ -86,9 +86,9 @@ class HomeScreen extends Component{
             var arr4 = data.films.cat
 
 
-            if (arr1[0] === arr3[0]
-                && arr2[0] === arr3[1]
-                && arr4 === arr3[2]) {
+            if (arr1.includes(arr3[0]) && arr2.includes(arr3[1]) &&  arr4 === arr3[2]
+                ) {
+                console.log(arr1.includes(arr3[0]) && arr2.includes(arr3[1]) && arr4 === arr3[2]);
                 this.FilmCardFitredData.push({...data});
                 FilmCardFitred.push(
  
@@ -99,6 +99,16 @@ class HomeScreen extends Component{
             
         }
 
+        // if (arr1[0] === arr3[0]
+        //     && arr2[0] === arr3[1]
+        //     && arr4 === arr3[2]
+        //     || arr1[1] === arr3[0]
+        //     && arr2[1] === arr3[1]
+        //     && arr4 === arr3[2]
+        //     || arr1[2] === arr3[0]
+        //     && arr2[2] === arr3[1]
+        //     && arr4 === arr3[2]) {
+        
         //var FilmCardFitred = filmsCard.filter(item => item)
         // console.log("filmsCard", FilmCardFitred);
 

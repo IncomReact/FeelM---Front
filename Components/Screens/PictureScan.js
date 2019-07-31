@@ -16,99 +16,45 @@ import LottieView from 'lottie-react-native';
 import { connect } from 'react-redux';
 import AnimatedLoader from "react-native-animated-loader";
 
-class HomeScreen extends Component{
+class PictureScan extends Component{
     constructor(props) {
         super(props);
         
         this.state = {
-            movies: [],
-            status: null,
-          
-            visible: false
-        };
+            refreshing: false,
+            picture: [],
+            age: '',
+            smile: '',
+            age: '',
+            heureux: '',
+            triste: '',
+            surpris: '',
+        }
     }
-    indexFilms = 0
-    wishlistSelect = () => {
-        this.setState({
-            visible: !this.state.visible
-        });
-        this.props.onSelectClick(this.props.Movies[this.indexFilms])
-        console.log('variable toto ========> ', this.props.Movies[this.indexFilms])
-        
-        setTimeout(() => {
-            this.setState({
-                visible: false
-            });
-        }, 1000);
-        this.props.navigation.navigate('Home')
-
-    };
     componentWillMount() {
-        this.setState({ status: 'Chargement des films en cours ...' });
-        
-    };
-    // navigationAndSelect = () => {
-        
-       
-    // }
+        fetch('https://feelmapp.herokuapp.com/library')
+            .then((response) => {
+                return response.json();
+            })
+            .then((picture) => {
+                console.log('======== picture =======', picture.user.pictures.length);
+                console.log('USERCOPY -----', picture)
+                var userCopy = [];
+                for (let i = 0; i < picture.user.pictures.length; i++) {
+                    userCopy.push({
+                        picture: picture.user.pictures[i].pictureUrl,
+                        gender: picture.user.pictures[i].gender, 
+                        age: picture.user.pictures[i].age,
+                    })
+                    this.setState({ picture: userCopy});
+                }
+
+                console.log('USERCOPY -----', userCopy)
+            })
+    }
+   
     render() {
 
-        
-        // console.log('========== Mood Redux ', this.props.filterData);
-        // // this.props.LesFilms.map((cat, b) => {
-        // //     console.log('========== Catégories', cat.films.cat);
-        // // })
-        // this.props.Movies.map((mood, b) => {
-        //     console.log('========== Mood Mongo DB', mood.films.mood);
-        // })
-        // this.props.Movies.map((avec, b) => {
-        //     console.log('========== Avec qui Mongo DB', avec.films.avec_qui);
-        // })
-       
-        var filmsCard = this.props.Movies.map((data, i) => {
-            console.log('DATA ========', data)
-            var arr1 = data.films.mood;
-            var arr2 = data.films.avec_qui;
-            var arr3 = this.props.filterData;
-            var arr4 = data.films.cat
-            console.log('mood ======== ', arr1);
-            console.log('avec_qui ============', arr2);
-            console.log('filterData ======== ', arr3);
-            console.log('cat ============', arr4);
-            for (let b = 0; b < arr1.length; b++) {
-                arr1
-  
-                console.log('arr1 ========',arr1[b])
-            // for (let c = 0; c < arr2.length; c++) {
-            //     console.log(arr2);
-            //     arr2
-            // }
-
-            // for (let a = 0; a < arr3.length; a++) {
-            //     console.log(arr3);
-                
-            // }
-            
-            if (arr1[b] === arr3[0] && arr3[1] === arr2[i] && arr4 === arr3[2]) {
-                
-                return (
-                    <Card key={i}><Image style={styles.card} source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }} /></Card>
-                )
-            } 
-                
-            }
-            // if (arr1[i] === arr2 === arr3) {
-            //     console.log('OUI');
-            // } else {
-            //     console.log('NON');
-            // }
-            console.log('Photooooo:::::::::',data.films.poster_path);
-            
-            })
-        console.log('filmsCard ...', filmsCard);
-        
-
-        // 
         return (
             <View style={styles.container}>
                 

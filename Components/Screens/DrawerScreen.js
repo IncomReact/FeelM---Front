@@ -53,7 +53,7 @@ class DrawerScreen extends React.Component {
                     </TouchableOpacity> 
                     <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('FaceFeelM')}> 
                     <Button
-                        title="FeceFeelM"
+                        title="FaceFeelM"
                         type="clear"
                         icon={
                             <SvgUri

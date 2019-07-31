@@ -11,7 +11,6 @@ export default function (filmData = [], action) {
                 films : action.films.movie[i]
 
             })
-            // console.log('Redux FilmData  ====================', action.films.movie[i].poster_path);
         }
 
         var lolo = filmCopy.sort(function (a, b) { return 0.5 - Math.random() }) 

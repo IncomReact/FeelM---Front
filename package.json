@@ -45,5 +45,5 @@
   "devDependencies": {
     "babel-preset-expo": "^5.1.1"
   },
-  "private": true
+  "private": false
 }

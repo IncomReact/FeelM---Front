@@ -27,33 +27,34 @@ export default class TypeScreen extends React.Component {
     }
 
     onPictureSaved = async photo => {
-        this.setState({
-            visible: !this.state.visible
-        });
-        setTimeout(() => {
-            this.setState({
-                visible: false
-            });
-            this.props.navigation.navigate('Home')
-        }, 4000);
+        // this.setState({
+        //     visible: !this.state.visible
+        // });
+        // setTimeout(() => {
+        //     this.setState({
+        //         visible: false
+        //     });
+        //     this.props.navigation.navigate('Home')
+        // }, 4000);
         console.log(photo.uri);
 
         console.log(photo.width);
         console.log(photo.height);
 
-        // var data = new FormData();
+        var data = new FormData();
 
-        // data.append('picture', {
-        //     uri: photo.uri,
-        //     type: 'image/jpeg',
-        //     name: 'user_picture.jpg',
-        // });
+        data.append('picture', {
+            uri: photo.uri,
+            type: 'image/jpeg',
+            name: 'user_picture.jpg',
+        });
 
-        // fetch("https://polar-earth-23785.herokuapp.com/upload", {
-        //     method: 'post',
-        //     body: data
-        // })
+        fetch("https://feelmapp.herokuapp.com/upload", {
+            method: 'post',
+            body: data
+        })
 
+        
 
     }
     render() {
@@ -61,7 +62,7 @@ export default class TypeScreen extends React.Component {
             return <View />;
         }
         else if (this.state.permision === false) {
-            return <Text>Vus n'avez pas accès à la caméra</Text>;
+            return <Text>Vous n'avez pas accès à la caméra</Text>;
         } 
         return (
             // // // // // View Principale  // // // // // //
@@ -98,7 +99,8 @@ export default class TypeScreen extends React.Component {
                             <SvgUri source={require('../../assets/close.svg')} width="28"
                                 height="28" />
                         </TouchableOpacity>
-                        <Button containerStyle={styles.BackCamera}
+                        <TouchableOpacity style={styles.BackCamera}>
+                        <Button 
 
                             icon={
                                 <Icon
@@ -120,7 +122,7 @@ export default class TypeScreen extends React.Component {
                                 }
                             }}
                         />
-                        
+                        </TouchableOpacity>
                         <TouchableOpacity style={[styles.FrontCamera, styles.green]} >
                             <Icon
                                 name="retweet"

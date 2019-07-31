@@ -16,24 +16,27 @@ import Moment from 'moment';
 class NowFilmScreen extends React.Component {
     render() {
 
+        var today = new Date();
+        var anneeEnCours = today.getFullYear();
+        var moisEnCours = (today.getMonth() + 1);
+        // console.log('DATE DU JOUR ----->',today.getFullYear()+'-'+(today.getMonth()+1))
+
         var nowFilms = this.props.nowFilms.map((data, i) => {
 
             var date = new Date(data.films.release_date);
             // var filtreAnnee = new Date('July 20, 10 00:20:18')
             var anneeSortie = date.getFullYear()
             var moisSortie = date.getMonth()
-            var moisDate = 5
-            var anneeDate = 2019
+            
 
-            console.log('FILTRE ----->', data.films.title, anneeSortie, moisSortie)
-
+            // console.log('FILTRE ----->',data.films.title,anneeSortie,moisSortie)
             // var dateSortie = Moment(data.films.release_date).format('DD-MM-YYYY')
 
-            if (data.films.cat == "cinema" && anneeSortie == anneeDate && moisSortie > moisDate) {
-                console.log(data.films.cat == "cinema" && anneeSortie == anneeDate && moisSortie > moisDate)
+            if (data.films.cat == "cinema" && anneeSortie == anneeEnCours && moisSortie > moisEnCours - 4) {
+
+                console.log(data.films.cat == "cinema" && anneeSortie == anneeEnCours && moisSortie > moisEnCours - 4)
+
                 return (
-
-
                     <View key={i}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
                             <Image
