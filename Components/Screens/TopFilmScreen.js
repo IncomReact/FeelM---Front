@@ -239,7 +239,7 @@ class TopFilmScreen extends React.Component {
                         </View>
                     </ScrollView>
 
-                    <Text style={styles.titre}>En Famille</Text>
+                    <Text style={styles.titre}>Avec mes enfants</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                         <View style={styles.content}>
