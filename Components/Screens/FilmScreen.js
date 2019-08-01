@@ -5,7 +5,7 @@ import {
     View,
     TouchableOpacity,
     Image,
-    ImageBackground
+    ScrollView
 } from 'react-native';
 import { Button, Header, Tile,} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -85,7 +85,7 @@ class FilmScreen extends Component {
                     </View>
                 </View>
 
-                <View style={styles.margeInterne}>
+                <ScrollView style={styles.margeInterne}>
                     <View style={styles.content}>
                         <Text style={styles.h2}>
                             Synopsis
@@ -137,7 +137,7 @@ class FilmScreen extends Component {
 
                     </View>
 
-                </View>
+                </ScrollView>
 
 
 
@@ -196,13 +196,14 @@ const styles = StyleSheet.create({
     vignette: {
         width: 150,
         height: 210,
-        marginTop: -80,
+        borderRadius: 10,
+        marginTop: -60,
     },
     h1: {
-
+        width:'70%',
         marginLeft: 20,
         color: '#fff',
-        fontSize: 26,
+        fontSize: 22,
         fontWeight: '800',
         marginTop: 25,
     }, h2: {

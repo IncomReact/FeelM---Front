@@ -27,7 +27,7 @@ class YoutubeScreen extends Component {
                     style={{ flex: 1 }}
                     javaScriptEnabled={true}
                     source={{
-                        uri: 'https://www.themoviedb.org/movie/' + idMovie + '-' + MovieName + '/videos?active_nav_item=Trailers&language=fr-FR' }}
+                        uri: 'https://www.youtube.com/results?search_query=' + MovieName + ' ' + 'Bande annonce VO' }}
                 />
             </View>
         )

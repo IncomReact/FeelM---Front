@@ -9,65 +9,70 @@ import SvgUri from 'react-native-svg-uri';
 import { DrawerActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
-
-
-
 class TopFilmScreen extends React.Component {
+
+   ///// Top Film //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    BestFilmsData = [];
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///// Amis Films //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    AmisFilmsData = [];
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    AmisFilmsData = [];
+    compagnonData = [];
+    SeulData = [];
+    familleData = [];
+    enfantsData = [];
+
+
+
+    DetailsSelect = (index) => {
+        console.log("index", index)
+        this.props.onTopfilmClick(this.props.topFilms[index])
+        this.props.navigation.navigate('Film')
+
+    }
     render() {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        this.BestFilmsData = [];
+        let BestFilms = [];
 
-        var topFilms = this.props.topFilms.map((data, i) => {
+        for (let i = 0; i < this.props.topFilms.length; i++) {
+            let data = this.props.topFilms[i];
 
-            if (data.films.vote_average > 8.4) {
+            if (data.films.vote_average > 8.4 && data.films.cat === 'film') {
 
-                return (
+                this.BestFilmsData.push({ ...data });
 
-
+                BestFilms.push(
                     <View key={i}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
-                            <Image
+                        <TouchableOpacity onPress={() => this.DetailsSelect(i)} >
+                            <Image onPress={() => this.DetailsSelect(i)}
                                 style={styles.image}
                                 source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
                             />
                         </TouchableOpacity>
 
                     </View>
-
                 )
+                
             }
 
 
-        })
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        this.AmisFilmsData = [];
+        let AmisFilms = []
 
-        var topFilmsWithFriends = this.props.topFilms.map((data, i) => {
-            console.log('ici data =====>>>', data)
+        for (let i = 0; i < this.props.topFilms.length; i++) {
+            let data = this.props.topFilms[i];
 
-            if (data.films.vote_average > 7 && data.films.avec_qui == "amis") {
+            if (data.films.vote_average > 7 && data.films.avec_qui.includes("amis") ) {
 
-                return (
+                this.AmisFilmsData.push({ ...data });
+                AmisFilms.push(
                     <View key={i}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
-                            <Image
-                                style={styles.image}
-                                source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-                )
-            }
-
-
-        })
-
-        var topFilmsWith = this.props.topFilms.map((data, i) => {
-            console.log('ici data =====>>>', data)
-
-            if (data.films.vote_average > 7 && data.films.avec_qui == "compagnon") {
-
-                return (
-                    <View key={i}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
-                            <Image
+                        <TouchableOpacity onPress={() => this.DetailsSelect(i)} >
+                            <Image onPress={() => this.DetailsSelect(i)}
                                 style={styles.image}
                                 source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
                             />
@@ -78,17 +83,21 @@ class TopFilmScreen extends React.Component {
             }
 
 
-        })
+        }
 
-        var topFilmsAlone = this.props.topFilms.map((data, i) => {
-            console.log('ici data =====>>>', data)
+        this.compagnonData = [];
+        let compagnon = []
 
-            if (data.films.vote_average > 7 && data.films.avec_qui == "seul") {
+        for (let i = 0; i < this.props.topFilms.length; i++) {
+            let data = this.props.topFilms[i];
 
-                return (
+            if (data.films.vote_average > 7 && data.films.avec_qui.includes("compagnon") ) {
+
+                this.compagnonData.push({ ...data });
+                compagnon.push(
                     <View key={i}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
-                            <Image
+                        <TouchableOpacity onPress={() => this.DetailsSelect(i)} >
+                            <Image onPress={() => this.DetailsSelect(i)}
                                 style={styles.image}
                                 source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
                             />
@@ -99,17 +108,20 @@ class TopFilmScreen extends React.Component {
             }
 
 
-        })
+        }
 
-        var topFilmsWithFamily = this.props.topFilms.map((data, i) => {
-            console.log('ici data =====>>>', data)
+        this.SeulData = [];
+        let seulFilms = []
 
-            if (data.films.vote_average > 7 && data.films.avec_qui == "famille") {
+        for (let i = 0; i < this.props.topFilms.length; i++) {
+            let data = this.props.topFilms[i];
+            if (data.films.vote_average > 7 && data.films.avec_qui.includes("seul")) {
 
-                return (
+                this.SeulData.push({ ...data });
+                seulFilms.push(
                     <View key={i}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
-                            <Image
+                        <TouchableOpacity onPress={() => this.DetailsSelect(i)} >
+                            <Image onPress={() => this.DetailsSelect(i)}
                                 style={styles.image}
                                 source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
                             />
@@ -120,17 +132,21 @@ class TopFilmScreen extends React.Component {
             }
 
 
-        })
+        }
 
-        var topFilmsWithChildren = this.props.topFilms.map((data, i) => {
-            console.log('ici data =====>>>', data)
+        this.familleData = [];
+        let familleFilms = []
 
-            if (data.films.vote_average > 7 && data.films.avec_qui == "enfants") {
+        for (let i = 0; i < this.props.topFilms.length; i++) {
+            let data = this.props.topFilms[i];
 
-                return (
+            if (data.films.vote_average > 7 && data.films.avec_qui.includes("famille") ) {
+
+                this.familleData.push({ ...data });
+                familleFilms.push(
                     <View key={i}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Film')} >
-                            <Image
+                        <TouchableOpacity onPress={() => this.DetailsSelect(i)} >
+                            <Image onPress={() => this.DetailsSelect(i)}
                                 style={styles.image}
                                 source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
                             />
@@ -141,7 +157,32 @@ class TopFilmScreen extends React.Component {
             }
 
 
-        })
+        }
+
+        this.enfantsData = [];
+        let enfants = []
+
+        for (let i = 0; i < this.props.topFilms.length; i++) {
+            let data = this.props.topFilms[i];
+
+            if (data.films.vote_average > 7 && data.films.avec_qui.includes("enfants")) {
+
+                this.enfantsData.push({ ...data });
+                enfants.push(
+                    <View key={i}>
+                        <TouchableOpacity onPress={() => this.DetailsSelect(i)} >
+                            <Image onPress={() => this.DetailsSelect(i)}
+                                style={styles.image}
+                                source={{ uri: 'https://image.tmdb.org/t/p/w500' + data.films.poster_path }}
+                            />
+                        </TouchableOpacity>
+                    </View>
+
+                )
+            }
+
+
+        }
 
         return (
             <View style={styles.container}>
@@ -162,7 +203,7 @@ class TopFilmScreen extends React.Component {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                         <View style={styles.content}>
-                            {topFilms}
+                            {BestFilms}
                         </View>
                     </ScrollView>
 
@@ -170,7 +211,7 @@ class TopFilmScreen extends React.Component {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                         <View style={styles.content}>
-                            {topFilmsWithFriends}
+                            {AmisFilms}
                         </View>
                     </ScrollView>
 
@@ -178,7 +219,7 @@ class TopFilmScreen extends React.Component {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                         <View style={styles.content}>
-                            {topFilmsWith}
+                            {compagnon}
                         </View>
                     </ScrollView>
 
@@ -186,7 +227,7 @@ class TopFilmScreen extends React.Component {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                         <View style={styles.content}>
-                            {topFilmsAlone}
+                            {seulFilms}
                         </View>
                     </ScrollView>
 
@@ -194,7 +235,7 @@ class TopFilmScreen extends React.Component {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                         <View style={styles.content}>
-                            {topFilmsWithFamily}
+                            {familleFilms}
                         </View>
                     </ScrollView>
 
@@ -202,7 +243,7 @@ class TopFilmScreen extends React.Component {
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                         <View style={styles.content}>
-                            {topFilmsWithChildren}
+                            {enfants}
                         </View>
                     </ScrollView>
 
@@ -223,9 +264,20 @@ function mapStateToProps(state) {
     return { topFilms: state.filmData }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+
+        onTopfilmClick: function (detailFilm) {
+            console.log("detailFilm ======>>>", detailFilm)
+            dispatch({ type: 'DetailsFilm', DetailsFilmData: detailFilm }
+            )
+
+        }
+    }
+}
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(TopFilmScreen);
 
 const styles = StyleSheet.create({
