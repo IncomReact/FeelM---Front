@@ -16,6 +16,16 @@ class LoginScreen extends React.Component {
 
             this.props.signin(userData)
         })
+
+        fetch('https://feelmapp.herokuapp.com/match').then(response => {
+            return response.json();
+        }).then(userMatch => {
+            this.props.MatchUserHandled(userMatch)
+            console.log('Tous les Users', userMatch)
+        }).catch(err => {
+            console.log(err);
+        });
+        
     }
     componentWillMount() {
 
@@ -36,14 +46,21 @@ class LoginScreen extends React.Component {
             authUrl:
                 'https://feelmapp.herokuapp.com/auth/facebook?redirectUrl=' + redirectUrl
         });
-        // console.log("Retour de Facebook --> ", result);
+        // fetch('https://feelmapp.herokuapp.com/setUser').then(response => {
+        //     return response.json();
+        // }).then(dataFilms => {
+        //     this.props.FilmsHandled(dataFilms)
+
+        // }).catch(err => {
+        //     console.log(err);
+        // });
         if (result.type === 'success') {
             this.props.signin(result.params)
             AsyncStorage.setItem("user", JSON.stringify(
                 result.params
             ))
 
-            // console.log("result.params", result.params);
+            console.log("result.params", result.params);
 
             // this.props.navigation.navigate('Mood');
         }
@@ -105,6 +122,9 @@ function mapDispatchToProps(dispatch) {
         },
         signin: function (user) {
             dispatch({ type: 'signin', user, })
+        },
+        MatchUserHandled: function (UserMatching) {
+            dispatch({ type: 'Matching', userModel : UserMatching, })
         },
     }
 }

@@ -8,10 +8,37 @@ import { Button,  Avatar, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import { connect } from 'react-redux';
+
 class DrawerScreen extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            onSelectClick: '',
+            visible: false,
+            success: false
+        }
+    }
+
     OnClear = async () => {
       AsyncStorage.clear()
         this.props.navigation.navigate('Login')
+    }
+
+    
+    componentDidMount() {
+        fetch(`https://feelmapp.herokuapp.com/userSearch?facebookid=${this.props.user.userId}`).then(response => {
+            return response.json();
+        }).then(userPro => {
+            // this.props.MatchUserHandled(userExist)
+            console.log('userPro :::', userPro)
+            this.props.OnUserExist(userPro)
+            
+            // console.log('UserExistMatch :::', this.state.UserExistMatch.userExist.avec_qui)
+
+        }).catch(err => {
+            console.log("TCL: ChartScreen -> componentWillMount -> err", err)
+
+        });
     }
     
    
@@ -36,6 +63,7 @@ class DrawerScreen extends React.Component {
                     </View>
                     
                 </View>
+               
                     <View style={styles.Mood}>
                     <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Mood')}>   
                         <Button 
@@ -207,9 +235,17 @@ function mapStateToProps(state) {
 
     return { user: state.user }
 }
+function mapDispatchToProps(dispatch) {
+    return {
+        OnUserExist: function (UserExist) {
+            dispatch({ type: 'userProfile', profile: UserExist })
+        }
+
+    }
+}
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(DrawerScreen);
 const styles = StyleSheet.create({
 
@@ -217,6 +253,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#13172F'
+    },
+    lottie: {
+        width: 300,
+        height: 300
     },
     profile: {
         marginTop:50,

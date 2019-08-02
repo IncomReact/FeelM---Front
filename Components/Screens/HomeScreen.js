@@ -73,7 +73,7 @@ class HomeScreen extends Component{
 
             if (arr1.includes(arr3[0]) && arr2.includes(arr3[1]) &&  arr4 === arr3[2]
                 ) {
-                console.log(arr1.includes(arr3[0]) && arr2.includes(arr3[1]) && arr4 === arr3[2]);
+                
                 this.FilmCardFitredData.push({...data});
                 FilmCardFitred.push(
  

@@ -3,75 +3,92 @@ import {
     View,
     StyleSheet, TouchableOpacity, StatusBar, Text,
 } from 'react-native';
-import { Button, Header } from 'react-native-elements';
+import { Button, Header, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SvgUri from 'react-native-svg-uri';
 import { connect } from 'react-redux';
-import Spinner from 'react-native-loading-spinner-overlay';
 import AnimatedLoader from "react-native-animated-loader";
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-} from 'react-native-chart-kit'
-import FusionCharts from 'react-native-fusioncharts';
-class TypeScreen extends React.Component {
-
+import SvgUri from 'react-native-svg-uri';
+class ChartScreen extends React.Component {
     constructor() {
         super();
         this.state = {
             onSelectClick: '',
-            visible: false
+            visible: false,
+            success: false
+            
         }
     }
-
-    navigationAndSelect = (toto) => {
-        this.props.onSelectClick(toto)
+    
+    componentWillMount() {
         this.setState({
-            visible: !this.state.visible
+            visible: !this.state.visible,
         });
         setTimeout(() => {
             this.setState({
-                visible: false
+                visible: false,
             });
-            this.props.navigation.navigate('Home')
+
         }, 2000);
-
-
-
     }
-
+    
     render() {
-        const commitsData = [
-            { date: '2079-07-02', count: 1 },
-            { date: '2079-07-03', count: 2 },
-            { date: '2079-07-04', count: 3 },
-            { date: '2079-07-05', count: 4 },
-            { date: '2079-07-06', count: 5 },
-            { date: '2079-07-22', count: 2 },
-            { date: '2079-07-24', count: 3 },
-            { date: '2079-07-07', count: 2 },
-            { date: '2079-06-02', count: 4 },
-            { date: '2079-05-05', count: 2 },
-            { date: '2079-05-12', count: 4 },
-            { date: '2079-05-13', count: 4 },
-            { date: '2079-05-15', count: 4 },
-            { date: '2079-05-21', count: 4 }
-        ]
-        const data = {
-            labels: ['Heureux', 'Triste', 'Etat second'], // optional
-            data: [0.4, 0.6, 0.8]
+        
+
+        var MonMood = this.props.me.userExist.mood
+        var AvecQui = this.props.me.userExist.avec_qui
+        // var Gender = this.props.me.userExist.gender
+        
+        
+        let UsersMatch = [];
+
+        for (let i = 0; i < this.props.user.length; i++) {
+            
+            let data = this.props.user[i]
+            let MoiMeme = this.props.me.userExist.facebookid === data.Users.facebookid
+            let Gender = this.props.me.userExist.gender != data.Users.gender
+           
+            console.log("MoiMeme ===== ", MoiMeme)
+            console.log("Gender ===== ", Gender)
+
+            if (data.Users.mood === MonMood && data.Users.avec_qui === AvecQui && !MoiMeme && Gender
+            )  {
+  
+                UsersMatch.push(
+                    <View style={styles.Mood}>
+                    <Button containerStyle={styles.ButtonMood}
+                        title={data.Users.firstname}
+                        type="clear"
+                        icon={
+                            <Avatar
+                                containerStyle={styles.Avatar}
+                                size={100}
+                                rounded
+                                source={{
+                                    uri: decodeURIComponent(data.Users.picture),
+                                }}
+                            />
+                        }
+                        titleStyle={styles.TitleButton}
+                        buttonStyle={{ justifyContent: 'center', flex: 1, }}
+                        
+                    />
+                    </View>
+                    
+                )
+            }
+            
+            // if (arr1.includes(arr3[0]) && arr2.includes(arr3[1]) && arr4 === arr3[2]
+            // ) {
+            //     console.log(arr1.includes(arr3[0]) && arr2.includes(arr3[1]) && arr4 === arr3[2]);
+                
+            // }
+
+
         }
-        const data2 = [
-            { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-            { name: 'Toronto', population: 2800000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-            { name: 'Beijing', population: 527612, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-            { name: 'New York', population: 8538000, color: '#ffffff', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-            { name: 'Moscow', population: 11920000, color: 'rgb(0, 0, 255)', legendFontColor: '#7F7F7F', legendFontSize: 15 }
-        ]
+
+
+
+
         return (
             // // // // // View Principale  // // // // // //
             <View style={styles.container}>
@@ -82,76 +99,152 @@ class TypeScreen extends React.Component {
                         size={25}
                         color='#fff'
                         onPress={() => this.props.navigation.goBack()} />}
-                    centerComponent={{ text: 'Mes statistiques', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                    centerComponent={{ text: 'Match FeelM', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                     containerStyle={{ backgroundColor: '#13172F', justifyContent: 'space-around', borderBottomColor: '#13172F' }}
                 />
                 {/***************************** Boutons ********************************/}
-                <Text style={{ color: '#fff', marginTop: 30, marginBottom: 30, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
-                        Mon Mood
-  </Text>
-                    <ProgressChart
-                        data={data}
-                        width={380}
-                        height={220}
-                        chartConfig={{
-                            backgroundColor: '#e26a00',
-                            backgroundGradientFrom: '#13172F',
-                            backgroundGradientTo: '#13172F',
-                            decimalPlaces: 2, // optional, defaults to 2dp
-                            color: (opacity = 0.2) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16, 
-                            }
-                        }}
-                    />
+                <Text style={{ color: '#fff', marginTop: 30, marginBottom: 5, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
                     
+                    Vous êtes souvent : {this.props.me.userExist.mood.charAt(0).toUpperCase() + this.props.me.userExist.mood.slice(1)}
+                    
+                </Text>
+                <Text style={{ color: '#fff', marginBottom: 10, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
+
+                    Avec : {this.props.me.userExist.avec_qui.charAt(0).toUpperCase() + this.props.me.userExist.avec_qui.slice(1)}
+
+                </Text>
+                <AnimatedLoader
+                    visible={this.state.visible}
+                    overlayColor="rgba(19,23,47,1)"
+                    source={require("../../assets/animations/pint2.json")}
+                    animationStyle={styles.lottie}
+                    speed={1}
+                />
                 
-                    <Text style={{ color: '#fff', marginTop: 30, marginBottom: 30, textAlign:'center', fontSize:16, fontWeight:'bold' }}>
-                        Mes habitudes
-                    </Text>
-                    <ContributionGraph
-                        values={commitsData}
-                        endDate={new Date('2079-07-30')}
-                        numDays={105}
-                        width={390}
-                        height={350}
-                        chartConfig={{
-                            backgroundColor: '#e26a00',
-                            backgroundGradientFrom: '#13172F',
-                            backgroundGradientTo: '#13172F',
-                            decimalPlaces: 3, // optional, defaults to 2dp
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-                            }
-                        }}
+                <View style={styles.Mood}>
+                    
+                    <Button containerStyle={styles.ButtonMood}
+                        title='Vous'
+                        type="clear"
+                        icon={
+                            <Avatar
+                                containerStyle={styles.Avatar}
+                                size={100}
+                                rounded
+                                source={{
+                                    uri: decodeURIComponent(this.props.me.userExist.picture),
+                                }}
+                            />
+                        }
+                        titleStyle={styles.TitleButton}
+                        buttonStyle={{ justifyContent: 'center', flex: 1, }}
+
                     />
-                 
+                </View>
+                <View style={styles.bolt}>
+                    <SvgUri style={styles.bolt}
+                    width="90"
+                    height="90"
+                    source={require('../../assets/icones/svg/bolt.svg')}
+                />
+                </View>
+                    {UsersMatch[0]}
+
                 
+                <View style={{ alignItems: 'center', justifyContent: 'flex-end',}}>
+                    <TouchableOpacity style={styles.chat} onPress={() => this.props.navigation.navigate('Match')}>
+                        <Button onPress={() => this.props.navigation.navigate('Match')}
+                        title="Démarrer le Chat"
+                        type="clear"
+                        titleStyle={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}
+                    />
+                </TouchableOpacity>
+                </View> 
+                 
             </View>
         );
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        onSelectClick: function (typeState) {
-            dispatch({ type: 'type', format: typeState })
-        }
-    }
+function mapStateToProps(state) {
+    console.log(' Mon profile ====', state.userProfile);
+    return { user: state.MatchUser, me: state.userProfile }
 }
 
+
 export default connect(
-    null,
-    mapDispatchToProps
-)(TypeScreen);
+    mapStateToProps,
+    null
+)(ChartScreen);
 
 const styles = StyleSheet.create({
 
     container: {
         flex: 1,
         backgroundColor: '#13172F',
+        
        
+    },
+    lottie: {
+        width: 300,
+        height: 300
+    },
+    Mood: {
+        height: '13%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 10,
+        marginRight: 15,
+        marginLeft: 15,
+    },
+    bolt: {
+        height: '13%',
+        
+        alignItems:'center',
+        marginTop: 10,
+        marginRight: 15,
+        marginLeft: 15,
+    },
+    chat: {
+        
+        width: '90%',
+        marginTop : 30,
+        marginBottom: 20,
+        height: 50,
+        borderRadius: 10,
+        justifyContent: 'center',
+
+        backgroundColor: '#3DB39E'
+
+    },
+    ButtonMood: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 5,
+        marginLeft: 5,
+
+    },
+    TitleButton: {
+        color: '#fff',
+        fontWeight: 'bold',
+        flexDirection: 'column',
+        marginLeft: 20,
+    },
+    Avatar: {
+        
+        shadowColor: 'rgba(0, 0, 0, 0.2)',
+        shadowOpacity: 1,
+        borderRadius: 100,
+        borderColor: "#fff",
+        borderWidth: 4,
+        elevation: 20,
+        shadowRadius: 10,
+        shadowOffset: {
+            width: 1,
+            height: 1
+        }
     },
     lottie: {
         width: 300,
@@ -169,22 +262,7 @@ const styles = StyleSheet.create({
     spinnerTextStyle: {
         color: '#FFF'
     },
-    ButtonMood: {
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 5,
-        marginLeft: 5,
-        backgroundColor: '#1C213E',
-
-    },
-    TitleButton: {
-        color: '#fff',
-        fontWeight: 'bold',
-        flexDirection: 'column',
-        marginLeft: 20,
-    }
+   
 
 
 

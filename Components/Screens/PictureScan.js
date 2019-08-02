@@ -6,13 +6,7 @@ import {
     TouchableOpacity,
     Image, Animated, ActivityIndicator
 } from 'react-native';
-import { Button, Header } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import SvgUri from 'react-native-svg-uri';
-import CardStack, { Card } from 'react-native-card-stack-swiper';
-import { LinearGradient } from 'expo-linear-gradient';
-import { DrawerActions } from 'react-navigation';
-import LottieView from 'lottie-react-native';
+
 import { connect } from 'react-redux';
 import AnimatedLoader from "react-native-animated-loader";
 

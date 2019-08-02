@@ -162,18 +162,7 @@ class HomeScreen extends Component{
                     speed={1}
                 />
                 <View style={{marginTop:100}}>
-                    
-                    <LinearGradient
-                        colors={['rgba(19,23,47,0)', 'rgba(19,23,47,1)', 'rgba(19,23,47,1)',]}
-                        style={{
-                            position: 'absolute',
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            height: '100%',
-                        }}
-                    />
-
+          
                 <CardStack
                     style={styles.content}
                     renderNoMoreCards={() => 
