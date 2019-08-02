@@ -108,7 +108,7 @@ class ChartScreen extends React.Component {
                     Vous êtes souvent : {this.props.me.userExist.mood.charAt(0).toUpperCase() + this.props.me.userExist.mood.slice(1)}
                     
                 </Text>
-                <Text style={{ color: '#fff', marginBottom: 10, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
+                <Text style={{ color: '#fff', marginBottom: 80, textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
 
                     Avec : {this.props.me.userExist.avec_qui.charAt(0).toUpperCase() + this.props.me.userExist.avec_qui.slice(1)}
 
@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
     },
     chat: {
         
-        width: '90%',
-        marginTop : 30,
+        width: '70%',
+        marginTop : 80,
         marginBottom: 20,
         height: 50,
         borderRadius: 10,

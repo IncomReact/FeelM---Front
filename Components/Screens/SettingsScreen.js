@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Text,
+   
     View,
-    TouchableOpacity,
-    Image, ImageBackground
+    
 } from 'react-native';
 import { Button, Header, Tile, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
-import { LinearGradient } from 'expo-linear-gradient';
-import { DrawerActions } from 'react-navigation';
+import { connect } from 'react-redux';
 
-export default class SettingsScreen extends Component {
+class SettingsScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
@@ -24,7 +22,7 @@ export default class SettingsScreen extends Component {
                         size={25}
                         color='#fff'
                         onPress={() => this.props.navigation.goBack()} />}
-                    centerComponent={{ text: 'Réglages', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                    centerComponent={{ text: 'Hello, ' + this.props.me.userExist.firstname , style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                     rightComponent={<Icon style={{ marginRight: 10 }}
                         name='home'
                         size={22}
@@ -34,21 +32,22 @@ export default class SettingsScreen extends Component {
                 />
                 <View style={styles.featured}>
                     <Tile
-                        imageSrc={require('../../assets/bg_Loggin.jpg')}
+                        imageSrc={{
+                            uri: decodeURIComponent(this.props.me.userExist.picture),
+                        }}
                         featured
                     />
 
                 </View >
                  
                <View style={styles.container2}>
-
+                   
                <Avatar containerStyle={styles.Avatar}
                         size={100}
                         rounded
 
                         source={{
-                            uri:
-                                'https://scontent-bru2-1.xx.fbcdn.net/v/t1.0-9/58659893_3214554075237045_7885584668697821184_o.jpg?_nc_cat=111&_nc_oc=AQlQdsbEKXbzMhGLuqKiqAPMssArWGyPg0nPELRgjqnkoXy1GijksMGC06DISd_arfE&_nc_ht=scontent-bru2-1.xx&oh=2a82b6328bce5aafd9c3e6957bbca2aa&oe=5DE9B389',
+                            uri: decodeURIComponent(this.props.me.userExist.picture),
                         }}
                         
 
@@ -128,7 +127,16 @@ export default class SettingsScreen extends Component {
         );
     }
 }
+function mapStateToProps(state) {
+    console.log(' Me Setting ====', state.userProfile);
+    return { me: state.userProfile }
+}
 
+
+export default connect(
+    mapStateToProps,
+    null
+)(SettingsScreen);
 
 const styles = StyleSheet.create({
     container: {

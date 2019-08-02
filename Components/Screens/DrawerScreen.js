@@ -175,7 +175,7 @@ class DrawerScreen extends React.Component {
                 <View style={styles.Mood}>
                     <TouchableOpacity style={styles.ButtonMood} onPress={() => this.props.navigation.navigate('Chart')}>       
                     <Button 
-                        title="Stats"
+                        title="MatchFeelM"
                         type="clear"
 
                         icon={
