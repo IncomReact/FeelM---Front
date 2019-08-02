@@ -36,7 +36,6 @@ class ChartScreen extends React.Component {
 
         var MonMood = this.props.me.userExist.mood
         var AvecQui = this.props.me.userExist.avec_qui
-        // var Gender = this.props.me.userExist.gender
         
         
         let UsersMatch = [];
@@ -50,9 +49,12 @@ class ChartScreen extends React.Component {
             console.log("MoiMeme ===== ", MoiMeme)
             console.log("Gender ===== ", Gender)
 
-            if (data.Users.mood === MonMood && data.Users.avec_qui === AvecQui && !MoiMeme && Gender
+            if (data.Users.mood === MonMood 
+                && data.Users.avec_qui === AvecQui
+                && !MoiMeme 
+                && Gender
             )  {
-  
+      
                 UsersMatch.push(
                     <View style={styles.Mood}>
                     <Button containerStyle={styles.ButtonMood}
@@ -75,14 +77,9 @@ class ChartScreen extends React.Component {
                     </View>
                     
                 )
-            }
-            
-            // if (arr1.includes(arr3[0]) && arr2.includes(arr3[1]) && arr4 === arr3[2]
-            // ) {
-            //     console.log(arr1.includes(arr3[0]) && arr2.includes(arr3[1]) && arr4 === arr3[2]);
-                
-            // }
 
+                break;
+            }
 
         }
 
@@ -148,12 +145,12 @@ class ChartScreen extends React.Component {
                     source={require('../../assets/icones/svg/bolt.svg')}
                 />
                 </View>
-                    {UsersMatch[0]}
+                    {UsersMatch}
 
                 
                 <View style={{ alignItems: 'center', justifyContent: 'flex-end',}}>
-                    <TouchableOpacity style={styles.chat} onPress={() => this.props.navigation.navigate('Match')}>
-                        <Button onPress={() => this.props.navigation.navigate('Match')}
+                    <TouchableOpacity style={styles.chat} onPress={() => this.props.navigation.navigate('Chat')}>
+                        <Button onPress={() => this.props.navigation.navigate('Chat')}
                         title="Démarrer le Chat"
                         type="clear"
                         titleStyle={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}
@@ -201,7 +198,8 @@ const styles = StyleSheet.create({
         height: '13%',
         
         alignItems:'center',
-        marginTop: 10,
+        marginTop: 15,
+        marginTop: 15,
         marginRight: 15,
         marginLeft: 15,
     },

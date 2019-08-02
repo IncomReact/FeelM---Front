@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet, TouchableOpacity, Image, ScrollView, Text
 } from 'react-native';
-import { Button, Header, SearchBar } from 'react-native-elements';
+import { Button, Header, SearchBar, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SvgUri from 'react-native-svg-uri';
 import { DrawerActions } from 'react-navigation';
@@ -25,6 +25,17 @@ class SearchMovieScreen extends React.Component {
     };
   }
 
+
+
+  DetailsSelect = (item) => {
+
+    this.props.onSearchListClick(item)
+    console.log('OBJET ITEM =====>', item)
+
+    this.props.navigation.navigate('Film')
+
+  }
+
   componentDidMount() {
     var searchMovies = this.props.searchMovies.map((data, i) => {
 
@@ -32,8 +43,11 @@ class SearchMovieScreen extends React.Component {
 
         {
           key: "otot" + i,
+          id: data.films.id,
           title: data.films.title,
-          poster: data.films.poster_path
+          poster_path: data.films.poster_path,
+          overview: data.films.overview,
+          vote_average: data.films.vote_average
         }
       )
 
@@ -65,7 +79,7 @@ class SearchMovieScreen extends React.Component {
   render() {
     const { query } = this.state;
     const films = this.findFilm(query);
-    console.log("TCL: SearchMovieScreen -> render -> films", films)
+    // console.log("TCL: SearchMovieScreen -> render -> films", films)
 
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
     return (
@@ -81,64 +95,63 @@ class SearchMovieScreen extends React.Component {
           centerComponent={{ text: 'Recherche', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
           containerStyle={{ backgroundColor: 'rgba(19,23,47,0)', justifyContent: 'space-around', borderBottomColor: 'rgba(19,23,47,0)', zIndex: 100 }}
         />
-        {/* <SearchBar
-                containerStyle={{
-                    backgroundColor: 'rgba(19,23,47,1)', marginTop: 10, marginBottom: 10, borderRadius: 20, marginRight: 15,
-                    marginLeft: 15,}}   
-                inputContainerStyle={{backgroundColor: '#fff'}}
-                inputStyle={{backgroundColor: '#fff'}}
-                placeholder="Chercher un film..."
-                onChangeText={this.updateSearch}
-                value={search}
-                searchIcon={<Icon style={{ marginLeft: 10 }}
-                    name='film'
-                    size={20}
-                    color='rgba(19,23,47,1)'
-                    />}
-              /> */}
 
-        <ScrollView >
-          <Autocomplete
-            autoCapitalize="none"
-            autoCorrect={false}
-            containerStyle={styles.autocompleteContainer}
-            //data to show in suggestion
-            data={films.length === 1 && comp(query, films[0].title) ? [] : films}
-            //default value if you want to set something in input
-            defaultValue={this.state.query}
-            /*onchange of the text changing the state of the query which will trigger
-            the findFilm method to show the suggestions*/
-            onChangeText={text => this.setState({ query: text })}
-            placeholder="Nom de film ou série"
-            renderItem={({ item, index }) => (
+
+        <Autocomplete
+          autoCapitalize="none"
+          autoCorrect={false}
+          containerStyle={styles.autocompleteContainer}
+          //data to show in suggestion
+          data={films.length === 1 && comp(query, films[0].title) ? [] : films}
+          //default value if you want to set something in input
+          defaultValue={this.state.query}
+          /*onchange of the text changing the state of the query which will trigger
+          the findFilm method to show the suggestions*/
+          onChangeText={text => this.setState({ query: text })}
+          placeholder="Nom de film ou série"
+          listStyle={{ borderColor: "#3D4A98", borderWidth: 2 }}
+
+          renderItem={({ item, index }) => (
+            <ScrollView>
               <TouchableOpacity onPress={() => this.setState({ query: title })}>
-                <Text style={styles.itemText}>
-                  {console.log("title films ----------->", item.title, item.poster)}
-                  {item.title} {item.poster}
-                </Text>
+
+                {console.log("title films ----------->", item)}
+
+                <ListItem
+                  containerStyle={{ backgroundColor: '#1C213E' }}
+                  onPress={() => this.DetailsSelect({ films: item })}
+                  leftElement={
+                    <View>
+                      <Image style={styles.WishlistImage} source={{ uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path }} />
+                    </View>
+                  }
+                  title={
+                    <View>
+                      <Text style={styles.Titre}>{item.title}</Text>
+                    </View>
+                  }
+                  subtitle={
+                    <View>
+                      <Text style={styles.Synopsis}>{item.overview.substr(0, 120) + "..."}</Text>
+                      <Text style={styles.Note}>Note : {item.vote_average} </Text>
+                    </View>
+                  }
+                />
+
+
               </TouchableOpacity>
-            )
-            }
-          />
-          <View style={styles.descriptionContainer}>
-            {films.length > 0 ? (
-              <Text style={styles.infoText}>{this.state.query}</Text>
-            ) : (
-                <Text style={styles.infoText}></Text>
-              )}
-          </View>
-
-
-
-
-
-
-        </ScrollView>
-
-
+            </ScrollView>
+          )
+          }
+        />
+        <View style={styles.descriptionContainer}>
+          {films.length > 0 ? (
+            <Text style={styles.infoText}>{this.state.query}</Text>
+          ) : (
+              <Text style={styles.infoText}></Text>
+            )}
+        </View>
       </View>
-
-
 
     );
   }
@@ -149,7 +162,22 @@ function mapStateToProps(state) {
   return { searchMovies: state.filmData }
 
 }
-export default connect(mapStateToProps, null)(SearchMovieScreen);
+
+function mapDispatchToProps(dispatch) {
+  return {
+
+    onSearchListClick: function (item) {
+      console.log("ITEM ======>>>", item)
+      dispatch({ type: 'DetailsFilm', DetailsFilmData: item }
+      )
+
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchMovieScreen);
+
+
 
 
 
@@ -183,6 +211,27 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     color: "#000"
+  },
+  WishlistImage: {
+    width: 80,
+    height: 130,
+  },
+  Synopsis: {
+    marginTop: 10,
+    color: '#f2f2f2',
+    fontSize: 16
+  },
+
+  Note: {
+    marginTop: 5,
+    fontWeight: '600',
+    color: '#E5C92F'
+
+  },
+  Titre: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#fff'
   },
 
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { createDrawerNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
+import { createDrawerNavigator, createAppContainer, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import LoginScreen from '../Screens/LoginScreen';
 import MoodScreen from '../Screens/MoodScreen'
 import WithScreen from '../Screens/WithScreen';
@@ -27,10 +27,12 @@ import ChartScreen from '../Screens/ChartScreen';
 import ScanPicture from '../Screens/PictureScan';
 import HomeScanScreen from '../Screens/HomeScanScreen';
 import MatchUserScreen from '../Screens/MatchUserScreen'
+import MessengerScreen from '../Screens/MessengerScreen'
 const navigator = createDrawerNavigator(
     {
         Home: HomeScreen,
         HomeScan: HomeScanScreen,
+        
     },
     {
         drawerType: 'back',
@@ -40,54 +42,41 @@ const navigator = createDrawerNavigator(
         contentComponent: DrawerScreen
     }
 );
-// const DrawerNavigator = createDrawerNavigator({
-//     Login: {
-//         Login : LoginScreen,
-//     },
-    
-// });
 
-// const MainNavigator = createBottomTabNavigator({
-//     Library: LibraryScreen,
 
-// }, {
-//         defaultNavigationOptions: ({ navigation }) => ({
-//             tabBarIcon: ({ focused, horizontal, tintColor }) => {
-//                 var iconName;
-//                 var outline = (focused)
-//                     ? ''
-//                     : '';
-//                 if (navigation.state.routeName == 'Camera') {
-//                     Platform.OS === 'ios'
-//                         ? iconName = 'camera-retro'
-//                         : iconName = 'camera-retro'
-//                 } else if (navigation.state.routeName == 'Library') {
-//                     Platform.OS === 'ios'
-//                         ? iconName = 'image'
-//                         : iconName = 'image'
-//                 }
+const MainNavigator = createBottomTabNavigator({
+    Chat: MessengerScreen,
+    Historiques: MessengerScreen,
 
-//                 return <Icon name={iconName} size={25} color={tintColor} />;
-//             }
-//         }),
-//         tabBarOptions: {
-//             activeTintColor: '#efbe4d',
-//             inactiveTintColor: '#392416',
-//             style: {
-//                 backgroundColor: '#fff', borderTopColor: '#fff', shadowColor: 'rgba(6, 49,77, 0.3)',
-//                 borderTopWidth: 5,
-//                 shadowOpacity: 1,
-//                 borderColor: "#fff",
-//                 borderWidth: 4,
-//                 elevation: 10,
-//                 shadowRadius: 10,
-//                 shadowOffset: {
-//                     width: 1,
-//                     height: 1
-//                 }
-//             }
-//         }
-//     });
+}, {
+        defaultNavigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, horizontal, tintColor }) => {
+                var iconName;
+                var outline = (focused)
+                    ? ''
+                    : '';
+                if (navigation.state.routeName == 'Chat') {
+                    Platform.OS === 'ios'
+                        ? iconName = 'comments'
+                        : iconName = 'comments'
+                } else if (navigation.state.routeName == 'Historiques') {
+                    Platform.OS === 'ios'
+                        ? iconName = 'history'
+                        : iconName = 'history'
+                }
+
+                return <Icon name={iconName} size={25} color={tintColor} />;
+            }
+        }),
+        tabBarOptions: {
+            activeTintColor: '#fff',
+            inactiveTintColor: '#1f7868',
+            style: {
+                backgroundColor: '#3DB39E', borderTopColor: '#3DB39E', 
+            
+            }
+        }
+    });
 
 var StackNavigator = createStackNavigator({
     
@@ -112,7 +101,8 @@ var StackNavigator = createStackNavigator({
     Chart: ChartScreen,
     Scan: ScanPicture,
     Match: MatchUserScreen,
-    
+    // Chat: MessengerScreen,
+    MainNavigator, MainNavigator,
     navigator : navigator
 }, { headerMode: 'none' })
 
